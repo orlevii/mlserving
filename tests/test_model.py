@@ -5,7 +5,7 @@ from ganesha.models import GenericModel
 from tests.common import MyTestModel
 
 
-class JarvisCoreModelsTest(unittest.TestCase):
+class GaneshaCoreModelsTest(unittest.TestCase):
     """Test cases for ganesha application setup"""
 
     def setUp(self):

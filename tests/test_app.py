@@ -8,7 +8,7 @@ from tests.common import generate_ganesha_config_with_model, MyTestModel
 from unittest.mock import patch
 
 
-class JarvisCoreAppTest(unittest.TestCase):
+class GaneshaCoreAppTest(unittest.TestCase):
     """Test cases for ganesha application setup"""
 
     def setUp(self):

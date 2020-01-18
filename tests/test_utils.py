@@ -5,7 +5,7 @@ from ganesha.utils import singleton
 PROP_VALUE = 10
 
 
-class JarvisCoreUtilsTest(unittest.TestCase):
+class GaneshaCoreUtilsTest(unittest.TestCase):
     """Test cases for ganesha utils"""
 
     def setUp(self):

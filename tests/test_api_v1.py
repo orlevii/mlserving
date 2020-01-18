@@ -6,7 +6,7 @@ from ganesha.app.api import generate_api_v1, generate_models_health_check, Inval
 from tests.common import generate_ganesha_config_with_model, MyTestModel
 
 
-class JarvisCoreApiV1Test(unittest.TestCase):
+class GaneshaCoreApiV1Test(unittest.TestCase):
     """Test cases for ganesha pre made api/v1"""
 
     def setUp(self):

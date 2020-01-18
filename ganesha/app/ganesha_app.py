@@ -9,13 +9,13 @@ from ._logs.initializers import get_stdout_handler
 from ._middlewares.response_time import RequestStatter
 from ._state import runtime_state
 from .api import Router
-from .ganesha_conf import JarvisConfiguration, Environment
+from .ganesha_conf import GaneshaConfig, Environment
 
 os.environ.setdefault('GANESHA_APP', 'app.py')
 
 
 class Ganesha(object):
-    def __init__(self, config: JarvisConfiguration):
+    def __init__(self, config: GaneshaConfig):
         self.config = config
         self.app: Flask = self.__create_flask_app()
         self.__init_logger()

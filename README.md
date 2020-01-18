@@ -20,15 +20,15 @@ Allows you to set up an inference-endpoint for you ML Model easily.
 <a name="basic_setup"></a>
 ## Basic Setup
 ```python
-from ganesha.app import Ganesha, JarvisConfiguration
+from ganesha.app import Ganesha, GaneshaConfig
 from ganesha.app.api import generate_api_v1
 
 # Initialize configuration
-conf = JarvisConfiguration(service_name='sample_ganesha',
+conf = GaneshaConfig(service_name='sample_ganesha',
                            listen_port=1234)
 
 # Setup an application
-ganesha_app = Jarvis(conf).setup()
+ganesha_app = Ganesha(conf).setup()
 
 # Get pre-made ping/health methods for free!
 api_v1 = generate_api_v1()
@@ -107,7 +107,7 @@ ganesha_app.register_router(url='/api/v1',
 ## Models
 Implementing your inference business-logic is easy
 
-For convinience reasons, you can inherit from JarvisModel class and override specifc methods:
+For convinience reasons, you can inherit from GaneshaModel class and override specifc methods:
 
 ```python
 from ganesha.models import GenericModel
@@ -128,17 +128,17 @@ class SampleModel(GenericModel):
 
 ganesha will automatically `init` your model instance upon calling `ganesha_app.setup()`
 ```python
-# Build a Jarvis Model instance
+# Build a Ganesha Model instance
 my_model = MyModel()
 
-conf = JarvisConfiguration(service_name='sample_ganesha',
+conf = GaneshaConfig(service_name='sample_ganesha',
                            listen_port=1234,
                            # Make ganesha aware of your instance
                            models_instances=[my_model])
 
 # Setup an application
-# Jarvis will call `init` on your instance -> your model will be loaded here
-ganesha_app = Jarvis(conf).setup()
+# Ganesha will call `init` on your instance -> your model will be loaded here
+ganesha_app = Ganesha(conf).setup()
 
 # Get pre-made ping/health methods for free!
 api_v1 = generate_api_v1()
@@ -165,11 +165,11 @@ Another way - the logger is a member of your app: `ganesha_app.logger`
 After you create your app, automatically a new logger is defined (named after your service):
 ```python
 # Initialize configuration
-conf = JarvisConfiguration(service_name='sample_ganesha',
+conf = GaneshaConfig(service_name='sample_ganesha',
                            listen_port=1234)
 
 # Setup an application
-ganesha_app = Jarvis(conf).setup()
+ganesha_app = Ganesha(conf).setup()
 
 # 1st way:
 import logging
