@@ -57,7 +57,7 @@ class RequestStatter(object):
             return response
 
         if request.url_rule is None:
-            return
+            return response
 
         # Get the response time for this request
         elapsed = time.time() - g.flask_request_start_time

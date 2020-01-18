@@ -22,8 +22,8 @@ class Jarvis(object):
         self._setup = False
 
     def setup(self):
-        self._expose_app_for_gunicorn()
         if self.__is_cli:
+            self._expose_app_for_gunicorn()
             return self
         if self._setup:
             return self
