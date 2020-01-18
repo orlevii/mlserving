@@ -1,12 +1,12 @@
 import unittest
 
-from jarvis.utils import singleton
+from ganesha.utils import singleton
 
 PROP_VALUE = 10
 
 
-class JarvisCoreUtilsTest(unittest.TestCase):
-    """Test cases for jarvis utils"""
+class GaneshaCoreUtilsTest(unittest.TestCase):
+    """Test cases for ganesha utils"""
 
     def setUp(self):
         pass

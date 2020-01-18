@@ -1,4 +1,4 @@
-# Jarvis
+# Ganesha
 A framework for developing a realtime model-inference service.
 
 Allows you to set up an inference-endpoint for you ML Model easily.
@@ -14,39 +14,39 @@ Allows you to set up an inference-endpoint for you ML Model easily.
 <a name="intallation"></a>
 ## Installation
 
-* Run: `pip install jarvis`
+* Run: `pip install ganesha`
 
 
 <a name="basic_setup"></a>
 ## Basic Setup
 ```python
-from jarvis.app import Jarvis, JarvisConfiguration
-from jarvis.app.api import generate_api_v1
+from ganesha.app import Ganesha, GaneshaConfig
+from ganesha.app.api import generate_api_v1
 
 # Initialize configuration
-conf = JarvisConfiguration(service_name='sample_jarvis',
+conf = GaneshaConfig(service_name='sample_ganesha',
                            listen_port=1234)
 
 # Setup an application
-jarvis_app = Jarvis(conf).setup()
+ganesha_app = Ganesha(conf).setup()
 
 # Get pre-made ping/health methods for free!
 api_v1 = generate_api_v1()
-jarvis_app.register_router(url='/api/v1',
+ganesha_app.register_router(url='/api/v1',
                            router=api_v1)
 
 # Run development server
-jarvis_app.run()
+ganesha_app.run()
 ```
 
 <a name="endpoints"></a>
 ## Your First Endpoint
-When using jarvis, it is easy to set up new endpoints.
+When using ganesha, it is easy to set up new endpoints.
 
 The most basic layer is a `Router`, once you add your routes to your router, you can register it to your application:
 ```python
 import json
-from jarvis.app.api import Router
+from ganesha.app.api import Router
 
 router = Router('v1')
 
@@ -54,7 +54,7 @@ router = Router('v1')
 def hello_world():
     return json.dumps({"hello": "world"})
 
-jarvis_app.register_router(url='/api/v1',
+ganesha_app.register_router(url='/api/v1',
                            router=router)
 ```
 
@@ -62,10 +62,10 @@ When using the decorator `@router.route(...)` you can add a new route to your ro
 By using `register_router`, you register the router under the specified url.
 
 ### Request Parameters
-jarvis gives you an easy way to extract and validate your request-parameters:
+ganesha gives you an easy way to extract and validate your request-parameters:
 ```python
 import json
-from jarvis.app.api import Router, validate_params
+from ganesha.app.api import Router, validate_params
 
 router = Router('v1')
 
@@ -78,17 +78,17 @@ def predict(vector):
     prediction = my_model.predict_proba(vector)
     return json.dumps({"hello": "world"})
 
-jarvis_app.register_router(url='/api/v1',
+ganesha_app.register_router(url='/api/v1',
                            router=router)
 ```
 
-jarvis uses `Cerberus` for schema validation, see https://docs.python-cerberus.org/en/stable/validation-rules.html for schema syntax
+ganesha uses `Cerberus` for schema validation, see https://docs.python-cerberus.org/en/stable/validation-rules.html for schema syntax
 
 
 ### Pre-Made API
-Most of the time, your aplication may want a ping+health route, jarvis gives that for free:
+Most of the time, your aplication may want a ping+health route, ganesha gives that for free:
 ```python
-from jarvis.app.api import generate_api_v1, validate_params
+from ganesha.app.api import generate_api_v1, validate_params
 
 api_v1 = generate_api_v1() # Returns a pre-made Router with /ping and /health
 ```
@@ -99,7 +99,7 @@ What's left? just register your own route in:
 def predict(**params):
     # code
 
-jarvis_app.register_router(url='/api/v1',
+ganesha_app.register_router(url='/api/v1',
                            router=api_v1)
 ```
 
@@ -107,10 +107,10 @@ jarvis_app.register_router(url='/api/v1',
 ## Models
 Implementing your inference business-logic is easy
 
-For convinience reasons, you can inherit from JarvisModel class and override specifc methods:
+For convinience reasons, you can inherit from GaneshaModel class and override specifc methods:
 
 ```python
-from jarvis.models import GenericModel
+from ganesha.models import GenericModel
 
 class SampleModel(GenericModel):
     def init(self, directory_path):
@@ -126,19 +126,19 @@ class SampleModel(GenericModel):
     # You can add as many methods as you wish, like pre-procssing methods & infer method...
 ```
 
-jarvis will automatically `init` your model instance upon calling `jarvis_app.setup()`
+ganesha will automatically `init` your model instance upon calling `ganesha_app.setup()`
 ```python
-# Build a Jarvis Model instance
+# Build a Ganesha Model instance
 my_model = MyModel()
 
-conf = JarvisConfiguration(service_name='sample_jarvis',
+conf = GaneshaConfig(service_name='sample_ganesha',
                            listen_port=1234,
-                           # Make jarvis aware of your instance
+                           # Make ganesha aware of your instance
                            models_instances=[my_model])
 
 # Setup an application
-# Jarvis will call `init` on your instance -> your model will be loaded here
-jarvis_app = Jarvis(conf).setup()
+# Ganesha will call `init` on your instance -> your model will be loaded here
+ganesha_app = Ganesha(conf).setup()
 
 # Get pre-made ping/health methods for free!
 api_v1 = generate_api_v1()
@@ -153,7 +153,7 @@ def predict(**params):
 
     return json.dumps({'probability': probability})
 
-jarvis_app.register_router(url='/api/v1',
+ganesha_app.register_router(url='/api/v1',
                            router=api_v1)
 ```
 
@@ -161,34 +161,34 @@ jarvis_app.register_router(url='/api/v1',
 ## Logging
 You can access the logger in 2 way,
 One way - you can get the logger with: `logging.getLogger(service_name)`
-Another way - the logger is a member of your app: `jarvis_app.logger`
+Another way - the logger is a member of your app: `ganesha_app.logger`
 After you create your app, automatically a new logger is defined (named after your service):
 ```python
 # Initialize configuration
-conf = JarvisConfiguration(service_name='sample_jarvis',
+conf = GaneshaConfig(service_name='sample_ganesha',
                            listen_port=1234)
 
 # Setup an application
-jarvis_app = Jarvis(conf).setup()
+ganesha_app = Ganesha(conf).setup()
 
 # 1st way:
 import logging
-logger = logging.getLogger('sample_jarvis')
+logger = logging.getLogger('sample_ganesha')
 logger.info('Message 1')
 
 # 2nd way:
-jarvis_app.logger.info('Message 2')
+ganesha_app.logger.info('Message 2')
 ```
 
 
 <a name="cli_cmd"></a>
 ## CLI Commands
-When installing jarvis, you get for free the CLI command `jarvis`
+When installing ganesha, you get for free the CLI command `ganesha`
 This command has utilities for both development and production.
 
 Available commands:
-* `jarvis test`
-* `jarvis shell`
-* `jarvis run dev/gunicorn`
+* `ganesha test`
+* `ganesha shell`
+* `ganesha run dev/gunicorn`
 
-The jarvis commands looks for your application in `app.py` by default, you can modify it by setting the environement variable: `JARVIS_APP`
+The ganesha commands looks for your application in `app.py` by default, you can modify it by setting the environement variable: `GANESHA_APP`

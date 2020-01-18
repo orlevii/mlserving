@@ -7,18 +7,18 @@ with open('README.md', 'r') as fh:
 
 # Pull version from source without importing
 # since we can't import something we haven't built yet :)
-exec(open('jarvis/version.py').read())
+exec(open('ganesha/version.py').read())
 
 setup(
     # Needed to silence warnings (and to be pythona worthwhile package)
-    name='jarvis',
+    name='ganesha',
     # Needed to actually package something
     # You can just specify the packages manually here if your project is
     # simple. Or you can use find_packages().
     packages=setuptools.find_packages(exclude='tests'),
 
     # Project URL
-    url='https://github.com/orlevi111/jarvis',
+    url='https://github.com/orlevi111/ganesha',
 
     # author
     author='Or Levi',
@@ -32,17 +32,22 @@ setup(
     # Choose your license
     license='LICENCE',
 
-    description='Core implementation of the Jarvis Framework',
+    description='A framework for developing a realtime model-inference service.',
 
     data_files=[('', ['README.md'])],
 
     # See https://pypi.python.org/pypi?%3Aaction=list_classifiers
-    classifiers=['Programming Language :: Python :: 3'],
+    classifiers=['Development Status :: 2 - Pre-Alpha',
+                 'Environment :: Web Environment',
+                 'Intended Audience :: Developers',
+                 'License :: OSI Approved :: BSD License',
+                 'Operating System :: OS Independent',
+                 'Programming Language :: Python :: 3'],
 
     # We will also need a readme eventually (there will be a warning)
     long_description_content_type='text/markdown',
 
     long_description=long_description,
 
-    entry_points={"console_scripts": ["jarvis = jarvis.cli:main"]}
+    entry_points={"console_scripts": ["ganesha = ganesha.cli:main"]}
 )

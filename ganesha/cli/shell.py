@@ -1,13 +1,13 @@
 import click
-from ._common import require_jarvis_app
+from ._common import require_ganesha_app
 import sys
 import os
 
 
 class Shell(object):
     @staticmethod
-    def register(jarvis_cli):
-        @jarvis_cli.command('shell', short_help='Run a shell in the app context.')
+    def register(ganesha_cli):
+        @ganesha_cli.command('shell', short_help='Run a shell in the app context.')
         @click.pass_context
         def shell(ctx):
             """Run an interactive Python shell in the context of a given
@@ -19,9 +19,9 @@ class Shell(object):
 
             import code
 
-            jarvis_app = require_jarvis_app(ctx)
-            jarvis_app.load_models()
-            app = jarvis_app.app
+            ganesha_app = require_ganesha_app(ctx)
+            ganesha_app.load_models()
+            app = ganesha_app.app
 
             banner = 'Python %s on %s\nApp: %s [%s]\nInstance: %s' % (
                 sys.version,

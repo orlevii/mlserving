@@ -9,7 +9,7 @@ class Environment(object):
     PRODUCTION = 'production'
 
 
-class JarvisConfiguration(object):
+class GaneshaConfig(object):
     def __init__(self, service_name, listen_port, models_instances=[],
                  local_model_directory_path='_models', health_check_methods={}):
         self.service_name = service_name
