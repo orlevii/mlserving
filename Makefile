@@ -20,7 +20,7 @@ upload:
 	python setup.py sdist upload -r local
 
 test:
-	coverage run -m unittest discover -v
+	FLASK_ENV="testing" coverage run -m unittest discover -v
 	rm .coverage
 
 lint:
