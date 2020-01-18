@@ -9,12 +9,12 @@ from ._logs.initializers import get_stdout_handler
 from ._middlewares.response_time import RequestStatter
 from ._state import runtime_state
 from .api import Router
-from .jarvis_conf import JarvisConfiguration, Environment
+from .ganesha_conf import JarvisConfiguration, Environment
 
-os.environ.setdefault('JARVIS_APP', 'app.py')
+os.environ.setdefault('GANESHA_APP', 'app.py')
 
 
-class Jarvis(object):
+class Ganesha(object):
     def __init__(self, config: JarvisConfiguration):
         self.config = config
         self.app: Flask = self.__create_flask_app()
@@ -53,7 +53,7 @@ class Jarvis(object):
 
     def __create_flask_app(self) -> Flask:
         app = Flask(__name__)
-        app.config['JARVIS'] = self.config
+        app.config['GANESHA'] = self.config
 
         # stats middleware
         RequestStatter(app, service_name=self.config.service_name)
@@ -87,7 +87,7 @@ class Jarvis(object):
 
     @property
     def __is_cli(self) -> bool:
-        cli = os.environ.get('JARVIS_CLI', '')
+        cli = os.environ.get('GANESHA_CLI', '')
 
         return cli.lower() == 'true'
 
@@ -97,7 +97,7 @@ class Jarvis(object):
         logger.handlers = self.logger.handlers
 
     def _expose_app_for_gunicorn(self):
-        main_app_module = os.environ.get('JARVIS_APP').split('.')[0]
+        main_app_module = os.environ.get('GANESHA_APP').split('.')[0]
         main_module = __import__(main_app_module)
         main_module.app = self.app
 

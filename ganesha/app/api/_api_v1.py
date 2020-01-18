@@ -3,7 +3,7 @@ import json
 
 from flask import current_app, Flask
 
-from jarvis.app._state import runtime_state
+from ganesha.app._state import runtime_state
 from ._router import Router
 from ._health_check import ValidHealthCheck, InvalidHealthCheck, HealthCheckStatus
 
@@ -13,7 +13,7 @@ def generate_api_v1() -> Router:
 
     @api_v1.route(url='/ping', method='GET')
     def ping():
-        msg = 'Pong from {}! - {}'.format(current_app.config['JARVIS'].service_name,
+        msg = 'Pong from {}! - {}'.format(current_app.config['GANESHA'].service_name,
                                           datetime.datetime.now())
 
         return json.dumps({'message': msg})
@@ -24,7 +24,7 @@ def generate_api_v1() -> Router:
         errors = [result for result in health_info.values() if result.get('status') == HealthCheckStatus.ERROR]
         has_errors = any(errors)
 
-        service_name = current_app.config['JARVIS'].service_name
+        service_name = current_app.config['GANESHA'].service_name
         status = runtime_state.status
 
         status_code = 503 if runtime_state.is_shutting_down() or has_errors else 200
@@ -38,7 +38,7 @@ def generate_api_v1() -> Router:
 
 
 def _get_health_info(flask_app: Flask):
-    methods = flask_app.config['JARVIS'].health_check_methods
+    methods = flask_app.config['GANESHA'].health_check_methods
 
     statuses = {}
     for method_name, method in methods.items():

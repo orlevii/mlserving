@@ -1,5 +1,5 @@
 import abc
-from jarvis.app.api import InvalidHealthCheck
+from ganesha.app.api import InvalidHealthCheck
 
 
 class GenericModel(object):

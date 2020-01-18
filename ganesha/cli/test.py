@@ -6,8 +6,8 @@ import click
 
 class Test(object):
     @staticmethod
-    def register(jarvis_cli):
-        @jarvis_cli.command(name='test', help='Run unit tests')
+    def register(ganesha_cli):
+        @ganesha_cli.command(name='test', help='Run unit tests')
         def test():
             if not os.path.isdir('./tests'):
                 click.echo('Could not find "tests" package,' +

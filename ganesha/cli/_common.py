@@ -4,9 +4,9 @@ import traceback
 
 import click
 
-from jarvis.app import Jarvis
+from ganesha.app import Ganesha
 
-APP_PATH = os.environ.get('JARVIS_APP')
+APP_PATH = os.environ.get('GANESHA_APP')
 
 
 def require_app_module(ctx):
@@ -22,12 +22,12 @@ def require_app_module(ctx):
     if app is None:
         click.echo(f'"{APP_PATH}" could not be found, make sure you run the command from the root directory')
         sys.exit(-1)
-    elif app.jarvis_app is None:
-        click.echo(f'could not found jarvis application instance under ${APP_PATH}')
+    elif app.ganesha_app is None:
+        click.echo(f'could not found ganesha application instance under ${APP_PATH}')
         sys.exit(-1)
 
     return app
 
 
-def require_jarvis_app(ctx) -> Jarvis:
-    return require_app_module(ctx).jarvis_app
+def require_ganesha_app(ctx) -> Ganesha:
+    return require_app_module(ctx).ganesha_app
