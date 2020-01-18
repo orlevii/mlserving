@@ -1,5 +1,6 @@
 import time
 from multiprocessing.dummy import Pool as ThreadPool
+
 from flask import g, request
 
 
@@ -15,7 +16,6 @@ class RequestStatter(object):
         # If an app was provided, then call `init_app` for them
         if app is not None:
             self.init_app(app)
-            self.map = app.url_map
         else:
             self.app = None
 
@@ -74,7 +74,7 @@ class RequestStatter(object):
                 blacklisted = self._is_blacklisted(request_method, request_path)
                 if not blacklisted:
                     self.app.logger.debug(
-                        "[{}] {} [{}] Time:{}".format(request_method, request_path, response_status_code, elapsed))
+                        "[{}] {} [{}] Time: {}ms".format(request_method, request_path, response_status_code, elapsed))
 
                     if self.report_method:
                         self.report_method(request_method=request_method, request_path=request_path,
@@ -91,7 +91,3 @@ class RequestStatter(object):
 
     def _is_blacklisted(self, method, url_path):
         return "{}:{}".format(method.lower(), url_path.lower()) in self.blacklist_routes
-
-    def _is_excluded(self, path, method):
-        match = self.map.match(path, method)
-        return match[0] in self.blacklist_routes
