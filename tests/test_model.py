@@ -6,7 +6,7 @@ from tests.common import MyTestModel
 
 
 class JarvisCoreModelsTest(unittest.TestCase):
-    """Test cases for jarvis-core application setup"""
+    """Test cases for jarvis application setup"""
 
     def setUp(self):
         pass

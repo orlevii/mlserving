@@ -6,7 +6,7 @@ PROP_VALUE = 10
 
 
 class JarvisCoreUtilsTest(unittest.TestCase):
-    """Test cases for jarvis-core utils"""
+    """Test cases for jarvis utils"""
 
     def setUp(self):
         pass

@@ -9,7 +9,7 @@ from unittest.mock import patch
 
 
 class JarvisCoreAppTest(unittest.TestCase):
-    """Test cases for jarvis-core application setup"""
+    """Test cases for jarvis application setup"""
 
     def setUp(self):
         conf = generate_jarvis_config_with_model()

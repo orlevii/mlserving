@@ -1,4 +1,4 @@
-# Jarvis Core
+# Jarvis
 A framework for developing a realtime model-inference service.
 
 Allows you to set up an inference-endpoint for you ML Model easily.
@@ -41,7 +41,7 @@ jarvis_app.run()
 
 <a name="endpoints"></a>
 ## Your First Endpoint
-When using jarvis-core, it is easy to set up new endpoints.
+When using jarvis, it is easy to set up new endpoints.
 
 The most basic layer is a `Router`, once you add your routes to your router, you can register it to your application:
 ```python
@@ -62,7 +62,7 @@ When using the decorator `@router.route(...)` you can add a new route to your ro
 By using `register_router`, you register the router under the specified url.
 
 ### Request Parameters
-jarvis-core gives you an easy way to extract and validate your request-parameters:
+jarvis gives you an easy way to extract and validate your request-parameters:
 ```python
 import json
 from jarvis.app.api import Router, validate_params
@@ -82,11 +82,11 @@ jarvis_app.register_router(url='/api/v1',
                            router=router)
 ```
 
-jarvis-core uses `Cerberus` for schema validation, see https://docs.python-cerberus.org/en/stable/validation-rules.html for schema syntax
+jarvis uses `Cerberus` for schema validation, see https://docs.python-cerberus.org/en/stable/validation-rules.html for schema syntax
 
 
 ### Pre-Made API
-Most of the time, your aplication may want a ping+health route, jarvis-core gives that for free:
+Most of the time, your aplication may want a ping+health route, jarvis gives that for free:
 ```python
 from jarvis.app.api import generate_api_v1, validate_params
 
@@ -126,14 +126,14 @@ class SampleModel(GenericModel):
     # You can add as many methods as you wish, like pre-procssing methods & infer method...
 ```
 
-jarvis-core will automatically `init` your model instance upon calling `jarvis_app.setup()`
+jarvis will automatically `init` your model instance upon calling `jarvis_app.setup()`
 ```python
 # Build a Jarvis Model instance
 my_model = MyModel()
 
 conf = JarvisConfiguration(service_name='sample_jarvis',
                            listen_port=1234,
-                           # Make jarvis-core aware of your instance
+                           # Make jarvis aware of your instance
                            models_instances=[my_model])
 
 # Setup an application
@@ -183,7 +183,7 @@ jarvis_app.logger.info('Message 2')
 
 <a name="cli_cmd"></a>
 ## CLI Commands
-When installing jarvis-core, you get for free the CLI command `jarvis`
+When installing jarvis, you get for free the CLI command `jarvis`
 This command has utilities for both development and production.
 
 Available commands:

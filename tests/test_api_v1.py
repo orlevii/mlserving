@@ -7,7 +7,7 @@ from tests.common import generate_jarvis_config_with_model, MyTestModel
 
 
 class JarvisCoreApiV1Test(unittest.TestCase):
-    """Test cases for jarvis-core pre made api/v1"""
+    """Test cases for jarvis pre made api/v1"""
 
     def setUp(self):
         conf = generate_jarvis_config_with_model()
