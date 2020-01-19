@@ -1,11 +1,6 @@
 name: Python Package Dev
 
-on:
-  push:
-    branches:
-    - '*'
-    - '!master'
-    - '!release/*'
+on: [push]
 
 jobs:
   build:
