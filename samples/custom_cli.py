@@ -22,7 +22,7 @@ def register_cli_commands():
     @ganesha_cli.command(name='download_models', help='Download latest version of the model')
     def download_models():
         # You can implement a CLI command for downloading the models from your storage.
-        # Models should be placed in _models folder
+        # Models should be placed under "_models" directory
         pass
 
 
