@@ -2,9 +2,9 @@ import logging
 import os
 import pickle
 
-from ganesha.app import Ganesha, GaneshaConfig
-from ganesha.app.api import generate_api_v1
-from ganesha.models import GenericModel
+from mest.app import Mest, MestConfig
+from mest.app.api import generate_api_v1
+from mest.models import GenericModel
 
 
 # Used for this sample app
@@ -40,17 +40,17 @@ class MySampleModel(GenericModel):
 model = MySampleModel()
 
 # Create your configuration
-conf = GaneshaConfig(service_name='sample_ganesha',
-                     listen_port=1234,
-                     # Pass the model instance!
-                     models_instances=[model])
+conf = MestConfig(service_name='sample_mest',
+                  listen_port=1234,
+                  # Pass the model instance!
+                  models_instances=[model])
 
 # Setup your application
-ganesha_app = Ganesha(conf).setup()
+mest_app = Mest(conf).setup()
 
 
 # Usually you want this in a different file
-def register_routes(ganesha_app):
+def register_routes(mest_app):
     # Out of the box - GET /ping & GET /health
     api_v1 = generate_api_v1()
     # Add POST /predict
@@ -61,19 +61,19 @@ def register_routes(ganesha_app):
                               'feature3': {'type': 'float', 'required': True},
                           })
 
-    ganesha_app.register_router(url='/api/v1',
+    mest_app.register_router(url='/api/v1',
                                 router=api_v1)
 
 
 # Register the routes on your app
-register_routes(ganesha_app)
+register_routes(mest_app)
 
 # You can also get the application logger whenever you want
-logger = logging.getLogger('sample_ganesha')
+logger = logging.getLogger('sample_mest')
 logger.debug('Works!')
 
 if __name__ == '__main__':
-    ganesha_app.run()
+    mest_app.run()
 
 # Now, you can run a simple POST request!
 """

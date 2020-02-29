@@ -2,26 +2,26 @@ import json
 import random
 import unittest
 
-from ganesha.app import Ganesha
-from ganesha.app.api import Router, validate_params
-from tests.common import generate_ganesha_config_with_model, MyTestModel
+from mest.app import Mest
+from mest.app.api import Router, validate_params
+from tests.common import generate_mest_config_with_model, MyTestModel
 from unittest.mock import patch
 
 
-class GaneshaCoreAppTest(unittest.TestCase):
-    """Test cases for ganesha application setup"""
+class MestCoreAppTest(unittest.TestCase):
+    """Test cases for mest application setup"""
 
     def setUp(self):
-        conf = generate_ganesha_config_with_model()
+        conf = generate_mest_config_with_model()
 
-        self.ganesha = Ganesha(conf)
+        self.mest = Mest(conf)
 
     def test_load_models(self):
         test_model = MyTestModel()
         test_model.model = None
 
-        self.ganesha.config.models_instances = [test_model]
-        self.ganesha.load_models()
+        self.mest.config.models_instances = [test_model]
+        self.mest.load_models()
 
         expected_result = '42'
 
@@ -35,10 +35,10 @@ class GaneshaCoreAppTest(unittest.TestCase):
         def ping_method():
             return expected_result
 
-        self.ganesha.register_router(url='/api/v1',
+        self.mest.register_router(url='/api/v1',
                                     router=router)
 
-        client = self.ganesha.app.test_client()
+        client = self.mest.app.test_client()
 
         res = client.get('/api/v1/ping')
         self.assertEqual(res.status_code, 200)
@@ -56,10 +56,10 @@ class GaneshaCoreAppTest(unittest.TestCase):
                 'prediction': value
             })
 
-        self.ganesha.register_router(url='/api/v1',
+        self.mest.register_router(url='/api/v1',
                                     router=router)
 
-        client = self.ganesha.app.test_client()
+        client = self.mest.app.test_client()
 
         expected_value = random.sample(population=range(10),
                                        k=1)[0]
@@ -77,18 +77,18 @@ class GaneshaCoreAppTest(unittest.TestCase):
         test_model = MyTestModel()
         test_model.model = None
 
-        self.ganesha.config.models_instances = [test_model]
-        self.ganesha.load_models()
+        self.mest.config.models_instances = [test_model]
+        self.mest.load_models()
 
         router = Router('v1')
 
         router.simple_predict(model_instance=test_model,
                               schema={'user_id': {'type': 'integer', 'required': True}})
 
-        self.ganesha.register_router(url='/api/v1',
+        self.mest.register_router(url='/api/v1',
                                     router=router)
 
-        client = self.ganesha.app.test_client()
+        client = self.mest.app.test_client()
 
         expected_result = 'hello world'
         mock_predict.return_value = expected_result

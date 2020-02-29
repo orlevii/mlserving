@@ -9,13 +9,13 @@ from ._logs.initializers import get_stdout_handler
 from ._middlewares.response_time import RequestStatter
 from ._state import runtime_state
 from .api import Router
-from .ganesha_conf import GaneshaConfig, Environment
+from .mest_conf import MestConfig, Environment
 
-os.environ.setdefault('GANESHA_APP', 'app.py')
+os.environ.setdefault('MEST_APP', 'app.py')
 
 
-class Ganesha(object):
-    def __init__(self, config: GaneshaConfig):
+class Mest(object):
+    def __init__(self, config: MestConfig):
         self.config = config
         self.app: Flask = self.__create_flask_app()
         self.__init_logger()
@@ -53,7 +53,7 @@ class Ganesha(object):
 
     def __create_flask_app(self) -> Flask:
         app = Flask(__name__)
-        app.config['GANESHA'] = self.config
+        app.config['MEST'] = self.config
 
         # stats middleware
         RequestStatter(app, service_name=self.config.service_name)
@@ -87,7 +87,7 @@ class Ganesha(object):
 
     @property
     def __is_cli(self) -> bool:
-        cli = os.environ.get('GANESHA_CLI', '')
+        cli = os.environ.get('MEST_CLI', '')
 
         return cli.lower() == 'true'
 
@@ -97,7 +97,7 @@ class Ganesha(object):
         logger.handlers = self.logger.handlers
 
     def _expose_app_for_gunicorn(self):
-        main_app_module = os.environ.get('GANESHA_APP').split('.')[0]
+        main_app_module = os.environ.get('MEST_APP').split('.')[0]
         main_module = __import__(main_app_module)
         main_module.app = self.app
 

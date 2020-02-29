@@ -1,5 +1,5 @@
 import abc
-from ganesha.app.api import InvalidHealthCheck
+from mest.app.api import InvalidHealthCheck
 
 
 class GenericModel(object):
