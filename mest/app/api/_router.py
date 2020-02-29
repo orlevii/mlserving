@@ -3,6 +3,7 @@ import json
 
 from flask import Blueprint, current_app
 
+from mest.app._state import runtime_state
 from ._request_parser import validate_params
 
 
@@ -39,4 +40,6 @@ class Router(object):
             msg = 'Pong from {}! - {}'.format(current_app.config['MEST'].service_name,
                                               datetime.datetime.now())
 
-            return json.dumps({'message': msg})
+            status_code = 503 if runtime_state.is_shutting_down() else 200
+
+            return json.dumps({'message': msg}), status_code

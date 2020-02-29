@@ -36,7 +36,7 @@ class MestCoreAppTest(unittest.TestCase):
             return expected_result
 
         self.mest.register_router(url='/api/v1',
-                                    router=router)
+                                  router=router)
 
         client = self.mest.app.test_client()
 
@@ -57,7 +57,7 @@ class MestCoreAppTest(unittest.TestCase):
             })
 
         self.mest.register_router(url='/api/v1',
-                                    router=router)
+                                  router=router)
 
         client = self.mest.app.test_client()
 
@@ -71,4 +71,3 @@ class MestCoreAppTest(unittest.TestCase):
         decoded = res.data.decode('utf-8')
         result_dict = json.loads(decoded)
         self.assertEqual(result_dict['prediction'], expected_value)
-
