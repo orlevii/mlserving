@@ -4,8 +4,6 @@ import json
 from flask import Blueprint, current_app
 
 from ._request_parser import validate_params
-from .health.health_check import generate_models_health_check
-from .health.health_runner import HealthRunner
 
 
 class Router(object):
@@ -42,11 +40,3 @@ class Router(object):
                                               datetime.datetime.now())
 
             return json.dumps({'message': msg})
-
-    def add_health_check_route(self, model_health_methods=None, url='/health', method='GET'):
-        if model_health_methods is None:
-            model_health_methods = generate_models_health_check()
-
-        @self.route(url=url, method=method)
-        def health():
-            HealthRunner.run(model_health_methods)
