@@ -25,7 +25,7 @@ from mest.app.api import generate_api_v1
 
 # Initialize configuration
 conf = MestConfig(service_name='sample_mest',
-                     listen_port=1234)
+                  listen_port=1234)
 
 # Setup an application
 mest_app = Mest(conf).setup()
@@ -33,7 +33,7 @@ mest_app = Mest(conf).setup()
 # Get pre-made ping/health methods for free!
 api_v1 = generate_api_v1()
 mest_app.register_router(url='/api/v1',
-                            router=api_v1)
+                         router=api_v1)
 
 # Run development server
 mest_app.run()
@@ -55,7 +55,7 @@ def hello_world():
     return json.dumps({"hello": "world"})
 
 mest_app.register_router(url='/api/v1',
-                            router=router)
+                         router=router)
 ```
 
 When using the decorator `@router.route(...)` you can add a new route to your router
@@ -79,7 +79,7 @@ def predict(vector):
     return json.dumps({"hello": "world"})
 
 mest_app.register_router(url='/api/v1',
-                            router=router)
+                         router=router)
 ```
 
 mest uses `Cerberus` for schema validation, see https://docs.python-cerberus.org/en/stable/validation-rules.html for schema syntax
@@ -100,7 +100,7 @@ def predict(**params):
     # code
 
 mest_app.register_router(url='/api/v1',
-                            router=api_v1)
+                         router=api_v1)
 ```
 
 <a name="models"></a>
@@ -132,9 +132,9 @@ mest will automatically `init` your model instance upon calling `mest_app.setup(
 my_model = MyModel()
 
 conf = MestConfig(service_name='sample_mest',
-                     listen_port=1234,
-                     # Make mest aware of your instance
-                     models_instances=[my_model])
+                  listen_port=1234,
+                  # Make mest aware of your instance
+                  models_instances=[my_model])
 
 # Setup an application
 # Mest will call `init` on your instance -> your model will be loaded here
@@ -154,7 +154,7 @@ def predict(**params):
     return json.dumps({'probability': probability})
 
 mest_app.register_router(url='/api/v1',
-                            router=api_v1)
+                         router=api_v1)
 ```
 
 <a name="logging"></a>
@@ -166,7 +166,7 @@ After you create your app, automatically a new logger is defined (named after yo
 ```python
 # Initialize configuration
 conf = MestConfig(service_name='sample_mest',
-                     listen_port=1234)
+                  listen_port=1234)
 
 # Setup an application
 mest_app = Mest(conf).setup()
