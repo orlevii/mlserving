@@ -1,6 +1,11 @@
-from flask import Blueprint
-from ._request_parser import validate_params
+import datetime
 import json
+
+from flask import Blueprint, current_app
+
+from ._request_parser import validate_params
+from .health.health_check import generate_models_health_check
+from .health.health_runner import HealthRunner
 
 
 class Router(object):
@@ -17,7 +22,7 @@ class Router(object):
 
         return decorator
 
-    def simple_predict(self, model_instance, schema, url='/predict', method='POST'):
+    def add_predict_route(self, model_instance, schema, url='/predict', method='POST'):
         @self.route(url, method=method)
         @validate_params(schema=schema)
         def predict(**params):
@@ -29,3 +34,19 @@ class Router(object):
                 response = {'message': str(e)}
 
                 return json.dumps(response), 500
+
+    def add_ping_route(self, url='/ping', method='GET'):
+        @self.route(url=url, method=method)
+        def ping():
+            msg = 'Pong from {}! - {}'.format(current_app.config['MEST'].service_name,
+                                              datetime.datetime.now())
+
+            return json.dumps({'message': msg})
+
+    def add_health_check_route(self, model_health_methods=None, url='/health', method='GET'):
+        if model_health_methods is None:
+            model_health_methods = generate_models_health_check()
+
+        @self.route(url=url, method=method)
+        def health():
+            HealthRunner.run(model_health_methods)

@@ -54,8 +54,8 @@ def register_routes(mest_app):
     # Out of the box - GET /ping & GET /health
     api_v1 = generate_api_v1()
     # Add POST /predict
-    api_v1.simple_predict(model,
-                          schema={
+    api_v1.add_predict_route(model,
+                             schema={
                               'feature1': {'type': 'float', 'required': True},
                               'feature2': {'type': 'float', 'required': True},
                               'feature3': {'type': 'float', 'required': True},
