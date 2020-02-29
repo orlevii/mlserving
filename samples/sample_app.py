@@ -49,6 +49,7 @@ conf = MestConfig(service_name='sample_mest',
 
 # Setup your application
 mest_app = Mest(conf).setup()
+wsgi = mest_app.app  # This one is for gunicorn support
 
 
 # Usually you want this in a different file

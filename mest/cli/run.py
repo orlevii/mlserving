@@ -31,7 +31,7 @@ class Run(object):
             mest = require_mest_app(ctx)
             listen_port = int(mest.config.listen_port)
 
-            cmd = 'gunicorn -w 1 -b 0.0.0.0:{listen_port} {app_module}:app --graceful-timeout 30'.format(
+            cmd = 'gunicorn -w 1 -b 0.0.0.0:{listen_port} {app_module}:wsgi --graceful-timeout 30'.format(
                 listen_port=listen_port,
                 app_module=__parse_app_module())
             exit_code = os.system(cmd)

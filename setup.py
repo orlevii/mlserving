@@ -24,7 +24,7 @@ setup(
     author='Or Levi',
     author_email='orlevi128@gmail.com',
     # Needed for dependencies
-    install_requires=['Flask==1.1.*', 'cerberus==1.3.*', 'gunicorn==19.*',
+    install_requires=['Flask==1.1.*', 'cerberus==1.3.*', 'gunicorn==20.*',
                       'python-dotenv==0.10.*', 'click==7.*'],
     # *strongly* suggested for sharing
     version=__version__,
