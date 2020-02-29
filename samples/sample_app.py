@@ -1,10 +1,12 @@
 import logging
-import os
-import pickle
 
 from mest.app import Mest, MestConfig
-from mest.app.api import generate_api_v1
+from mest.app.api import Router
 from mest.models import GenericModel
+
+
+# import os
+# import pickle
 
 
 # Used for this sample app
@@ -51,18 +53,22 @@ mest_app = Mest(conf).setup()
 
 # Usually you want this in a different file
 def register_routes(mest_app):
-    # Out of the box - GET /ping & GET /health
-    api_v1 = generate_api_v1()
+    # Create a router
+    api_v1 = Router('v1')
+
+    # Add GET /ping route (if needed)
+    api_v1.add_ping_route()
+
     # Add POST /predict
     api_v1.add_predict_route(model,
                              schema={
-                              'feature1': {'type': 'float', 'required': True},
-                              'feature2': {'type': 'float', 'required': True},
-                              'feature3': {'type': 'float', 'required': True},
-                          })
+                                 'feature1': {'type': 'float', 'required': True},
+                                 'feature2': {'type': 'float', 'required': True},
+                                 'feature3': {'type': 'float', 'required': True},
+                             })
 
     mest_app.register_router(url='/api/v1',
-                                router=api_v1)
+                             router=api_v1)
 
 
 # Register the routes on your app
