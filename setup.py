@@ -37,7 +37,7 @@ setup(
     data_files=[('', ['README.md'])],
 
     # See https://pypi.python.org/pypi?%3Aaction=list_classifiers
-    classifiers=['Development Status :: 2 - Pre-Alpha',
+    classifiers=['Development Status :: 3 - Alpha',
                  'Environment :: Web Environment',
                  'Intended Audience :: Developers',
                  'License :: OSI Approved :: MIT License',
