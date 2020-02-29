@@ -32,8 +32,6 @@ mest_app = Mest(conf).setup()
 
 # Create a Router and add routes to it
 api_v1 = Router('v1')
-# Add ping route
-api_v1.add_ping_route()
 
 mest_app.register_router(url='/api/v1',
                          router=api_v1)
