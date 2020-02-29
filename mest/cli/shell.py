@@ -1,13 +1,13 @@
 import click
-from ._common import require_ganesha_app
+from ._common import require_mest_app
 import sys
 import os
 
 
 class Shell(object):
     @staticmethod
-    def register(ganesha_cli):
-        @ganesha_cli.command('shell', short_help='Run a shell in the app context.')
+    def register(mest_cli):
+        @mest_cli.command('shell', short_help='Run a shell in the app context.')
         @click.pass_context
         def shell(ctx):
             """Run an interactive Python shell in the context of a given
@@ -19,9 +19,9 @@ class Shell(object):
 
             import code
 
-            ganesha_app = require_ganesha_app(ctx)
-            ganesha_app.load_models()
-            app = ganesha_app.app
+            mest_app = require_mest_app(ctx)
+            mest_app.load_models()
+            app = mest_app.app
 
             banner = 'Python %s on %s\nApp: %s [%s]\nInstance: %s' % (
                 sys.version,

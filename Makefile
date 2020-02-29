@@ -7,17 +7,11 @@ help:
 	@echo "  docs	create pydocs for all relveant modules"
 	@echo "	 test	run all tests with coverage"
 
-clean:
-	rm -rf dist/*
-
 dev:
 	pip install --upgrade pip
 	pip install coverage
 	pip install -r requirements.txt
 	pip install -e .
-
-upload:
-	python setup.py sdist upload -r local
 
 test:
 	FLASK_ENV="testing" coverage run -m unittest discover -v

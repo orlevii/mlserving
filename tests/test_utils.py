@@ -1,12 +1,12 @@
 import unittest
 
-from ganesha.utils import singleton
+from mest.utils import singleton
 
 PROP_VALUE = 10
 
 
-class GaneshaCoreUtilsTest(unittest.TestCase):
-    """Test cases for ganesha utils"""
+class MestCoreUtilsTest(unittest.TestCase):
+    """Test cases for mest utils"""
 
     def setUp(self):
         pass

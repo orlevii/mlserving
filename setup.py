@@ -7,18 +7,18 @@ with open('README.md', 'r') as fh:
 
 # Pull version from source without importing
 # since we can't import something we haven't built yet :)
-exec(open('ganesha/version.py').read())
+exec(open('mest/version.py').read())
 
 setup(
     # Needed to silence warnings (and to be pythona worthwhile package)
-    name='ganesha',
+    name='mest',
     # Needed to actually package something
     # You can just specify the packages manually here if your project is
     # simple. Or you can use find_packages().
     packages=setuptools.find_packages(exclude='tests'),
 
     # Project URL
-    url='https://github.com/orlevi111/ganesha',
+    url='https://github.com/orlevi111/mest',
 
     # author
     author='Or Levi',
@@ -40,7 +40,7 @@ setup(
     classifiers=['Development Status :: 2 - Pre-Alpha',
                  'Environment :: Web Environment',
                  'Intended Audience :: Developers',
-                 'License :: OSI Approved :: BSD License',
+                 'License :: OSI Approved :: MIT License',
                  'Operating System :: OS Independent',
                  'Programming Language :: Python :: 3'],
 
@@ -49,5 +49,5 @@ setup(
 
     long_description=long_description,
 
-    entry_points={"console_scripts": ["ganesha = ganesha.cli:main"]}
+    entry_points={"console_scripts": ["mest = mest.cli:main"]}
 )

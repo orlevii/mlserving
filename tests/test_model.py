@@ -1,12 +1,12 @@
 import random
 import unittest
 
-from ganesha.models import GenericModel
+from mest.models import GenericModel
 from tests.common import MyTestModel
 
 
-class GaneshaCoreModelsTest(unittest.TestCase):
-    """Test cases for ganesha application setup"""
+class MestCoreModelsTest(unittest.TestCase):
+    """Test cases for mest application setup"""
 
     def setUp(self):
         pass

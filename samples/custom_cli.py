@@ -1,40 +1,40 @@
 """
-When using Ganesha CLI, it will look for "app.py" in the current directory
+When using Mest CLI, it will look for "app.py" in the current directory
 
 To play around, name this file "app.py", or run:
-$ export GANESHA_APP=custom_cli.py
+$ export MEST_APP=custom_cli.py
 
 To see all available commands:
-$ ganesha --help
-Now you can run your "$ ganesha hello" command
+$ mest --help
+Now you can run your "$ mest hello" command
 -----------------------
 """
-from ganesha.app import Ganesha, GaneshaConfig
-from ganesha.cli import ganesha_cli
+from mest.app import Mest, MestConfig
+from mest.cli import mest_cli
 
 
 def register_cli_commands():
     # See click for more options
-    @ganesha_cli.command(name='hello', help='Prints hello world to the console')
+    @mest_cli.command(name='hello', help='Prints hello world to the console')
     def hello():
         print('hello world!')
 
-    @ganesha_cli.command(name='download_models', help='Download latest version of the model')
+    @mest_cli.command(name='download_models', help='Download latest version of the model')
     def download_models():
         # You can implement a CLI command for downloading the models from your storage.
         # Models should be placed under "_models" directory
         pass
 
 
-conf = GaneshaConfig(service_name='test_ganesha',
-                     listen_port=1234)
+conf = MestConfig(service_name='test_mest',
+                  listen_port=1234)
 
 # This one is required for the CLI to work correctly
-ganesha_app = Ganesha(conf).setup()
+mest_app = Mest(conf).setup()
 
 register_cli_commands()
 
 if __name__ == '__main__':
-    ganesha_app.run()
+    mest_app.run()
 
 
