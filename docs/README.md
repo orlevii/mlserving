@@ -21,7 +21,7 @@ Allows you to set up an inference-endpoint for you ML Model easily.
 ## Basic Setup
 ```python
 from mest.app import Mest, MestConfig
-from mest.app.api import generate_api_v1
+from mest.app.api import Router
 
 # Initialize configuration
 conf = MestConfig(service_name='sample_mest',
@@ -30,8 +30,9 @@ conf = MestConfig(service_name='sample_mest',
 # Setup an application
 mest_app = Mest(conf).setup()
 
-# Get pre-made ping/health methods for free!
-api_v1 = generate_api_v1()
+# Create a Router and add routes to it
+api_v1 = Router('v1')
+
 mest_app.register_router(url='/api/v1',
                          router=api_v1)
 
@@ -76,32 +77,13 @@ schema = {'vector': {'type': 'list', 'schema': {'type': 'float'}}}
 @validate_params(schema)
 def predict(vector):
     prediction = my_model.predict_proba(vector)
-    return json.dumps({"hello": "world"})
+    return json.dumps({"probability": prediction})
 
 mest_app.register_router(url='/api/v1',
                          router=router)
 ```
 
 mest uses `Cerberus` for schema validation, see https://docs.python-cerberus.org/en/stable/validation-rules.html for schema syntax
-
-
-### Pre-Made API
-Most of the time, your aplication may want a ping+health route, mest gives that for free:
-```python
-from mest.app.api import generate_api_v1, validate_params
-
-api_v1 = generate_api_v1() # Returns a pre-made Router with /ping and /health
-```
-What's left? just register your own route in:
-```python
-@api_v1.route(url='predict', method='POST')
-@validate_params(schema)
-def predict(**params):
-    # code
-
-mest_app.register_router(url='/api/v1',
-                         router=api_v1)
-```
 
 <a name="models"></a>
 ## Models
@@ -110,6 +92,8 @@ Implementing your inference business-logic is easy
 For convinience reasons, you can inherit from MestModel class and override specifc methods:
 
 ```python
+import os
+import pickle
 from mest.models import GenericModel
 
 class SampleModel(GenericModel):
@@ -140,8 +124,7 @@ conf = MestConfig(service_name='sample_mest',
 # Mest will call `init` on your instance -> your model will be loaded here
 mest_app = Mest(conf).setup()
 
-# Get pre-made ping/health methods for free!
-api_v1 = generate_api_v1()
+api_v1 = Router('v1')
 
 # Add your prediction route
 schema = {...}

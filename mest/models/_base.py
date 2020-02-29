@@ -1,5 +1,4 @@
 import abc
-from mest.app.api import InvalidHealthCheck
 
 
 class GenericModel(object):
@@ -40,10 +39,6 @@ class GenericModel(object):
     @property
     def is_loaded(self):
         return self.model is not None
-
-    def health(self):
-        if not self.is_loaded:
-            return InvalidHealthCheck(message='Model is not loaded!')
 
     @staticmethod
     def __invoke_with_expansion(method, payload):

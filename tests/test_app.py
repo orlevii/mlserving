@@ -36,7 +36,7 @@ class MestCoreAppTest(unittest.TestCase):
             return expected_result
 
         self.mest.register_router(url='/api/v1',
-                                    router=router)
+                                  router=router)
 
         client = self.mest.app.test_client()
 
@@ -57,7 +57,7 @@ class MestCoreAppTest(unittest.TestCase):
             })
 
         self.mest.register_router(url='/api/v1',
-                                    router=router)
+                                  router=router)
 
         client = self.mest.app.test_client()
 
@@ -71,37 +71,3 @@ class MestCoreAppTest(unittest.TestCase):
         decoded = res.data.decode('utf-8')
         result_dict = json.loads(decoded)
         self.assertEqual(result_dict['prediction'], expected_value)
-
-    @patch('tests.common.MyTestModel.predict')
-    def test_add_predict(self, mock_predict):
-        test_model = MyTestModel()
-        test_model.model = None
-
-        self.mest.config.models_instances = [test_model]
-        self.mest.load_models()
-
-        router = Router('v1')
-
-        router.simple_predict(model_instance=test_model,
-                              schema={'user_id': {'type': 'integer', 'required': True}})
-
-        self.mest.register_router(url='/api/v1',
-                                    router=router)
-
-        client = self.mest.app.test_client()
-
-        expected_result = 'hello world'
-        mock_predict.return_value = expected_result
-
-        random_user_id = random.sample(population=range(10),
-                                       k=1)[0]
-        res = client.post('/api/v1/predict',
-                          data=json.dumps(dict(user_id=random_user_id)),
-                          content_type='application/json')
-
-        decoded = res.data.decode('utf-8')
-        result_value = json.loads(decoded)
-
-        self.assertEqual(res.status_code, 200)
-        self.assertEqual(result_value, expected_result)
-        self.assertEqual(mock_predict.call_count, 1)

@@ -1,6 +1,10 @@
-from flask import Blueprint
-from ._request_parser import validate_params
+import datetime
 import json
+
+from flask import Blueprint, current_app
+
+from mest.app._state import runtime_state
+from ._request_parser import validate_params
 
 
 class Router(object):
@@ -17,7 +21,7 @@ class Router(object):
 
         return decorator
 
-    def simple_predict(self, model_instance, schema, url='/predict', method='POST'):
+    def add_predict_route(self, model_instance, schema, url='/predict', method='POST'):
         @self.route(url, method=method)
         @validate_params(schema=schema)
         def predict(**params):
@@ -29,3 +33,13 @@ class Router(object):
                 response = {'message': str(e)}
 
                 return json.dumps(response), 500
+
+    def add_ping_route(self, url='/ping', method='GET'):
+        @self.route(url=url, method=method)
+        def ping():
+            msg = 'Pong from {}! - {}'.format(current_app.config['MEST'].service_name,
+                                              datetime.datetime.now())
+
+            status_code = 503 if runtime_state.is_shutting_down() else 200
+
+            return json.dumps({'message': msg}), status_code

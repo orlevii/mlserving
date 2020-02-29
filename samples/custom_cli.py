@@ -36,5 +36,3 @@ register_cli_commands()
 
 if __name__ == '__main__':
     mest_app.run()
-
-
