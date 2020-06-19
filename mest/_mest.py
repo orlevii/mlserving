@@ -3,13 +3,9 @@ import logging
 import os
 import signal
 
-from flask import Flask
-
-from ._logs.initializers import get_stdout_handler
-from ._middlewares.response_time import RequestStatter
-from ._state import runtime_state
-from .api import Router
-from .mest_conf import MestConfig, Environment
+from mest.app._state import runtime_state
+from mest.app.api import Router
+from mest.app.mest_conf import MestConfig, Environment
 
 os.environ.setdefault('MEST_APP', 'app.py')
 

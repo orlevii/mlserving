@@ -21,7 +21,7 @@ def register_cli_commands():
 
     @mest_cli.command(name='download_models', help='Download latest version of the model')
     def download_models():
-        # You can implement a CLI command for downloading the models from your storage.
+        # You can implement a CLI command for downloading the predictors from your storage.
         # Models should be placed under "_models" directory
         pass
 
