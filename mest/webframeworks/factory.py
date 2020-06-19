@@ -1,13 +1,18 @@
+from mest.webframeworks import WebFramework
+
+
 class WebFrameworkFactory:
 
     @staticmethod
-    def create(name: str):
+    def create(name: str) -> WebFramework:
         framework = FRAMEWORKS.get(name)
         if framework is None:
             raise NotImplementedError(f'Framework {name} is not implemented')
 
+        return framework()
+
     @staticmethod
-    def falcon():
+    def _falcon():
         try:
             from .falcon import Falcon
         except ImportError:
@@ -15,5 +20,5 @@ class WebFrameworkFactory:
 
 
 FRAMEWORKS = dict(
-    falcon=WebFrameworkFactory.falcon
+    falcon=WebFrameworkFactory._falcon
 )

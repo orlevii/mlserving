@@ -2,18 +2,23 @@ import json
 import logging
 import os
 import signal
+from typing import Union
+from wsgiref import simple_server
 
-from mest.app._state import runtime_state
 from mest.app.api import Router
-from mest.app.mest_conf import MestConfig, Environment
+from .webframeworks import WebFramework, WebFrameworkFactory
 
 os.environ.setdefault('MEST_APP', 'app.py')
 
 
 class Mest(object):
-    def __init__(self, config: MestConfig):
-        self.config = config
-        self.app: Flask = self.__create_flask_app()
+    def __init__(self,
+                 framework: Union[str, WebFramework] = 'falcon'):
+        if isinstance(framework, WebFramework):
+            self.web_framework = framework
+        else:
+            self.web_framework = WebFrameworkFactory.create(framework)
+
         self.__init_logger()
         self._setup = False
 
@@ -33,12 +38,11 @@ class Mest(object):
 
         return self
 
-    def run(self):
-        if not self._setup:
-            raise RuntimeError('setup() must be called before run()')
+    def run(self, host='0.0.0.0', port=5000):
 
-        self.app.run(port=self.config.listen_port,
-                     host='0.0.0.0')
+        if __name__ == '__main__':
+            with simple_server.make_server(host, port, self.web_framework.app) as httpd:
+                httpd.serve_forever()
 
     def register_router(self, url: str, router: Router):
         self.app.register_blueprint(router._blueprint, url_prefix=url)
@@ -46,28 +50,6 @@ class Mest(object):
     @property
     def logger(self):
         return self.app.logger
-
-    def __create_flask_app(self) -> Flask:
-        app = Flask(__name__)
-        app.config['MEST'] = self.config
-
-        # stats middleware
-        RequestStatter(app, service_name=self.config.service_name)
-
-        # logger
-        if not self.config.debug:
-            app.logger.handlers = []
-
-        stdout_handler = get_stdout_handler(self.config.service_name)
-        if self.config.env == Environment.DEVELOPMENT:
-            stdout_handler.setLevel(logging.DEBUG)
-
-        if not self.config.debug:
-            app.logger.addHandler(stdout_handler)
-
-        app.logger.setLevel(logging.DEBUG)
-
-        return app
 
     def load_models(self):
         model_instance_name = None
