@@ -3,7 +3,7 @@ import json
 
 from flask import Blueprint, current_app
 
-from mest.app._state import runtime_state
+from mest.app.state import runtime_state
 from ._request_parser import validate_params
 
 

@@ -41,7 +41,7 @@ class MestCoreAppTest(unittest.TestCase):
         client = self.mest.app.test_client()
 
         res = client.get('/api/v1/ping')
-        self.assertEqual(res.status_code, 200)
+        self.assertEqual(res.status, 200)
 
         response = res.data.decode('utf-8')
         self.assertEqual(response, expected_result)
@@ -66,7 +66,7 @@ class MestCoreAppTest(unittest.TestCase):
         res = client.post('/api/v1/predict',
                           data=json.dumps(dict(value=expected_value)),
                           content_type='application/json')
-        self.assertEqual(res.status_code, 200)
+        self.assertEqual(res.status, 200)
 
         decoded = res.data.decode('utf-8')
         result_dict = json.loads(decoded)

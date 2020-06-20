@@ -1,7 +1,7 @@
 import abc
 from http import HTTPStatus
 
-from mest.predictors import Response
+from mest.api import Response
 from typing import Any, Union
 
 
@@ -42,4 +42,4 @@ class PredictorBase:
 
     def error_response(self, e: Exception):
         return Response(data={'error': str(e)},
-                        status_code=HTTPStatus.INTERNAL_SERVER_ERROR)
+                        status=HTTPStatus.INTERNAL_SERVER_ERROR)

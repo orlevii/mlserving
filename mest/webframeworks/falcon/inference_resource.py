@@ -15,5 +15,6 @@ class InferenceResource:
         response = predictor.predict(input_data)
 
         res.body = response.text
+        res.status = response.status_string
 
         return res

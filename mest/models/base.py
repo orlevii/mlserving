@@ -1,15 +1,14 @@
 from abc import abstractmethod
 
 from mest.predictors import PredictorBase
+from typing import NoReturn
 
 
 class BaseModel:
     @abstractmethod
-    def load(self, local_model_dir: str):
+    def load(self) -> NoReturn:
         """
         Loads all the relevant files needed in order to perform inference.
-
-        @param local_model_dir: The local directory where all the files needed for this model are available.
         """
         pass
 
@@ -20,3 +19,7 @@ class BaseModel:
         This method will be called every inference.
         """
         pass
+
+    @property
+    def is_healthy(self) -> bool:
+        return True

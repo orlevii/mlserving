@@ -3,14 +3,18 @@ from abc import abstractmethod
 
 class WebFramework:
     @abstractmethod
-    def add_inference_route(self, rule, predictor):
+    def add_inference_route(self, rule, model):
         pass
 
     @abstractmethod
-    def add_get_route(self):
+    def add_health_route(self, rule, model):
         pass
 
-    @abstractmethod
     @property
+    @abstractmethod
     def app(self):
+        pass
+
+    @abstractmethod
+    def set_error_handler(self, handler):
         pass

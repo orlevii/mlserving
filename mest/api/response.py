@@ -7,11 +7,11 @@ class Response:
     def __init__(self,
                  text: Optional[str] = None,
                  data: Optional[dict] = None,
-                 status_code: Union[HTTPStatus, int] = HTTPStatus.OK,
+                 status: Union[int, HTTPStatus] = HTTPStatus.OK,
                  content_type: str = 'application/json'):
         self._text = text
         self._data = data
-        self.status_code = status_code
+        self.status = status
         self.content_type = content_type
 
     @property
@@ -33,3 +33,11 @@ class Response:
             self._text = json.dumps(self._data)
 
         return self._text
+
+    @property
+    def status_string(self) -> str:
+        s = self.status
+        if isinstance(self.status, int):
+            s = HTTPStatus(self.status)
+
+        return f'{s.value} - {s.phrase}'

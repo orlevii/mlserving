@@ -4,7 +4,7 @@ import unittest
 from unittest.mock import patch
 
 from mest.app import Mest
-from mest.app._state import runtime_state
+from mest.app.state import runtime_state
 from mest.app.api import Router
 from tests.common import generate_mest_config_with_model, MyTestModel
 
@@ -29,7 +29,7 @@ class MestRouterTest(unittest.TestCase):
 
     def test_pre_made_api_ping(self):
         res = self.client.get('/api/v1/ping')
-        self.assertEqual(res.status_code, 200)
+        self.assertEqual(res.status, 200)
 
         decoded = res.data.decode('utf-8')
         result_dict = json.loads(decoded)
@@ -39,7 +39,7 @@ class MestRouterTest(unittest.TestCase):
     def test_pre_made_api_ping_when_shutting_down(self):
         runtime_state._shutting_down = True
         res = self.client.get('/api/v1/ping')
-        self.assertEqual(res.status_code, 503)
+        self.assertEqual(res.status, 503)
 
         decoded = res.data.decode('utf-8')
         result_dict = json.loads(decoded)
@@ -63,6 +63,6 @@ class MestRouterTest(unittest.TestCase):
         decoded = res.data.decode('utf-8')
         result_value = json.loads(decoded)
 
-        self.assertEqual(res.status_code, 200)
+        self.assertEqual(res.status, 200)
         self.assertEqual(result_value, expected_result)
         self.assertEqual(mock_predict.call_count, 1)
