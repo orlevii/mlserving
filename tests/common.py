@@ -1,30 +1,37 @@
 import os
+from random import randint
+from typing import Any, Union
+from wsgiref import simple_server
 
-from mest.models import GenericModel
-from mest.app import MestConfig
+from mest.api import Response
+from mest.models import BaseModel
+from mest.predictors import PredictorBase
 
 
-class MyTestModel(GenericModel):
-    def init(self, path):
-        file_path = os.path.join(path, 'model.txt')
+class MyTestModel(BaseModel):
+    def create_predictor(self):
+        return MyTestPredictor(self)
+
+    def __init__(self):
+        file_path = os.path.join(current_file_path(), '_models', 'model.txt')
         with open(file_path, 'r') as fs:
             self.model = fs.read()
 
-    def infer(self, *args, **kwargs):
-        return self.model
+
+class MyTestPredictor(PredictorBase):
+    def __init__(self, model):
+        self.model: MyTestModel = None  # Just for type annotation
+        super().__init__(model)
+
+    def infer(self, processed_data: Any) -> Union[Any, Response]:
+        return self.model.model
 
 
 def current_file_path():
     return os.path.dirname(os.path.abspath(__file__))
 
 
-def generate_mest_config() -> MestConfig:
-    return MestConfig(service_name='test_mest',
-                      listen_port=1234)
-
-
-def generate_mest_config_with_model() -> MestConfig:
-    conf = generate_mest_config()
-    conf.local_model_directory_path = os.path.join(current_file_path(), '_models')
-
-    return conf
+def create_test_server(app):
+    port = randint(1000, 9999)
+    httpd = simple_server.make_server('0.0.0.0', port, app)
+    return httpd

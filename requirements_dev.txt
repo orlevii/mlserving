@@ -1,3 +1,4 @@
 falcon==2.*
+requests
 coverage
 flake8
