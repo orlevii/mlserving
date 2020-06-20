@@ -63,7 +63,5 @@ setup(
     # We will also need a readme eventually (there will be a warning)
     long_description_content_type='text/markdown',
 
-    long_description=long_description,
-
-    entry_points={"console_scripts": ["mest = mest.cli:main"]}
+    long_description=long_description
 )
