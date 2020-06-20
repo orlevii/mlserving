@@ -1,16 +1,15 @@
 from abc import abstractmethod
-
-from mest.predictors import PredictorBase
 from typing import NoReturn
+
+from mest.app.health import HealthStatus, Healthy
+from mest.predictors import PredictorBase
 
 
 class BaseModel:
-    @abstractmethod
-    def load(self) -> NoReturn:
-        """
-        Loads all the relevant files needed in order to perform inference.
-        """
-        pass
+    """
+    This class represents a loaded model
+    __init__ should loads all the relevant data needed in order to perform inference.
+    """
 
     @abstractmethod
     def create_predictor(self) -> PredictorBase:
@@ -20,6 +19,10 @@ class BaseModel:
         """
         pass
 
-    @property
-    def is_healthy(self) -> bool:
-        return True
+    def health_status(self) -> HealthStatus:
+        """
+        @return: Given the state of this model-instance, can the inference be performed?
+        This method is used for health-checks.
+        It's not recommended to run here complex computation.
+        """
+        return Healthy()

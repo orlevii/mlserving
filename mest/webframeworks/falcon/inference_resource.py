@@ -1,6 +1,6 @@
 from falcon import Request, Response
+
 from mest.models import BaseModel
-import json
 
 
 class InferenceResource:
@@ -9,9 +9,8 @@ class InferenceResource:
 
     def on_post(self, req: Request, res: Response):
         predictor = self.model.create_predictor()
-        data_str = req.stream.read().decode('utf-8')
 
-        input_data = json.loads(data_str)
+        input_data = req.media
         response = predictor.predict(input_data)
 
         res.body = response.text

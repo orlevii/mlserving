@@ -1,5 +1,4 @@
 import logging
-import os
 import signal
 import sys
 from http import HTTPStatus
@@ -10,52 +9,43 @@ from .api import Response
 from .app.state import runtime_state
 from .webframeworks import WebFramework, WebFrameworkFactory
 
-os.environ.setdefault('MEST_APP', 'app.py')
-
 
 class Mest(object):
     def __init__(self,
-                 framework: Union[str, WebFramework] = 'falcon'):
+                 framework: Union[str, WebFramework] = 'falcon',
+                 **kwargs):
+        """
+        Initialized mest-application
+        @param framework: The web-framework to use
+            (default: "falcon")
+        @param kwargs: Additional configs, currently not in use.
+        """
         if isinstance(framework, WebFramework):
             self.web_framework = framework
         else:
             self.web_framework = WebFrameworkFactory.create(framework)
 
-        self._logger = self.__init_logger()
+        self.__init_logger()
         self._handle_sigterm(self.logger)
 
         err_handler = self.get_default_error_handler()
         self.web_framework.set_error_handler(err_handler)
 
-    # def setup(self):
-    #     if self.__is_cli:
-    #         self._expose_app_for_gunicorn()
-    #         return self
-    #     if self._setup:
-    #         return self
-    #
-    #     _handle_sigterm(self.logger)
-    #     _register_error_handler(self.app)
-    #
-    #     self._setup = True
-    #
-    #     return self
+    def add_inference_handler(self, model, rule, **kwargs):
+        self.web_framework.add_inference_handler(model, rule, **kwargs)
+
+    def add_health_handler(self, model, rule, **kwargs):
+        self.web_framework.add_health_handler(model, rule, **kwargs)
 
     def run(self, host='0.0.0.0', port=5000):
-        with simple_server.make_server(host, port, self.web_framework.app) as httpd:
+        with simple_server.make_server(host, port, self.app) as httpd:
             self.logger.info(f'Running development server on: http://{host}:{port}/')
-            self.logger.warning(f'NOTICE! Running development on production environment is not recommended.')
+            self.logger.warning(f'NOTICE! Running development server on production environment is not recommended.')
             httpd.serve_forever()
 
     @property
     def logger(self):
-        return self._logger
-
-    @property
-    def __is_cli(self) -> bool:
-        cli = os.environ.get('MEST_CLI', '')
-
-        return cli.lower() == 'true'
+        return logging.getLogger('mest')
 
     @staticmethod
     def __init_logger():
@@ -69,10 +59,9 @@ class Mest(object):
         logger.addHandler(stdout_handler)
         return logger
 
-    def _expose_app_for_gunicorn(self):
-        main_app_module = os.environ.get('MEST_APP').split('.')[0]
-        main_module = __import__(main_app_module)
-        main_module.app = self.app
+    @property
+    def app(self):
+        return self.web_framework.app
 
     @staticmethod
     def _handle_sigterm(logger):
@@ -85,7 +74,7 @@ class Mest(object):
     def get_default_error_handler(self):
         def handler(e: Exception) -> Response:
             self.logger.exception(e)
-            return Response(data={'message': str(e)},
+            return Response(data={'message': f'{type(e).__name__} {e}'.strip()},
                             status=HTTPStatus.INTERNAL_SERVER_ERROR)
 
         return handler

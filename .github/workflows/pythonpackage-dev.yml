@@ -19,7 +19,7 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
       run: |
-        make dev
+        make init
     - name: Lint with flake8
       run: |
         make lint

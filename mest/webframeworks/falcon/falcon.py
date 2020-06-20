@@ -1,9 +1,9 @@
 import falcon
 
 from mest.webframeworks.base import WebFramework
-from .inference_resource import InferenceResource
-from .health_resource import HealthResource
 from .error_handler import error_handler
+from .health_resource import HealthResource
+from .inference_resource import InferenceResource
 
 
 class Falcon(WebFramework):
@@ -15,11 +15,11 @@ class Falcon(WebFramework):
     def app(self):
         return self._app
 
-    def add_inference_route(self, rule, model):
+    def add_inference_handler(self, model, rule, **kwargs):
         self.app.add_route(uri_template=rule,
                            resource=InferenceResource(model))
 
-    def add_health_route(self, rule, model):
+    def add_health_handler(self, model, rule, **kwargs):
         self.app.add_route(uri_template=rule,
                            resource=HealthResource(model))
 

@@ -1,21 +1,12 @@
 .PHONY: help clean dev docs package test
 
-help:
-	@echo "This project assumes that an active Python virtualenv is present."
-	@echo "The following make targets are available:"
-	@echo "	 dev 	install all deps for dev env"
-	@echo "	 test	run all tests with coverage"
-	@echo "	 lint	run lint with flake8"
-
-dev:
+init:
 	pip install --upgrade pip
-	pip install coverage
-	pip install -r requirements.txt
-	pip install -e .
+	pip install -e .[falcon]
+	pip install -r requirements_dev.txt
 
 test:
-	FLASK_ENV="testing" coverage run -m unittest discover -v
-	rm .coverage
+	coverage run -m unittest discover -v
 
 lint:
 	pip install flake8

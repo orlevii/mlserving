@@ -1,7 +1,5 @@
 .idea/
+.coverage
 *.pyc
 .DS_Store
-Pipfile
-Pipfile.lock
 *.egg-info/
-
