@@ -9,7 +9,7 @@ class PredictorBase:
     """
     The base predictor class, orchestrates the prediction flow
     """
-    REQUEST_SCHEMA: Optional[dict] = None
+    REQUEST_SCHEMA = None
 
     def __init__(self, model):
         self.model = model
