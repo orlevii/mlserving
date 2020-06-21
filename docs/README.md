@@ -96,7 +96,13 @@ gunicorn with gevent works well for most use-cases:
 
 server your application: `app.py`:
 ```python
+from mest import Mest
+# other imports ...
+
+
 mest = Mest()
+
+# Expose app for gunicorn
 app = mest.app
 ```
 
