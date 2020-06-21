@@ -3,8 +3,19 @@ name: Python Package Dev
 on: [push]
 
 jobs:
-  build:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.7
+    - name: Lint with flake8
+      run: |
+        make lint
 
+  build:
     runs-on: ubuntu-latest
     strategy:
       max-parallel: 4
@@ -20,9 +31,6 @@ jobs:
     - name: Install dependencies
       run: |
         make init
-    - name: Lint with flake8
-      run: |
-        make lint
     - name: Run tests
       run: |
         make test
