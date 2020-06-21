@@ -73,7 +73,10 @@ This example assumes your endpoint receives post-processed features.
 <a name="web_frameworks"></a>
 ## Web Frameworks
 Currently, `falcon` is the only WebFramework implemented.
-You can implement your own web-framework pass it as a parameter
+
+Install mest with falcon: `pip install mest[falcon]`
+ 
+You can implement your own web-framework and pass it as a parameter
 
 ```python
 from mest import Mest
