@@ -8,6 +8,8 @@ Allows you to set up an inference-endpoint for you ML Model easily.
 ## Table of Contents:
 1. [Installation](#intallation)
 2. [Serving Models](#serving_models)
+3. [Web Frameworks](#web_frameworks)
+4. [Running In Production](#production)
 
 <a name="intallation"></a>
 ## Installation
@@ -66,3 +68,36 @@ mest.run()
 ```
 This example assumes your endpoint receives post-processed features.
 
+`mest.run()` - Will start up development server, by default it listens on port 5000
+
+<a name="web_frameworks"></a>
+## Web Frameworks
+Currently, `falcon` is the only WebFramework implemented.
+You can implement your own web-framework pass it as a parameter
+
+```python
+from mest import Mest
+from mest.webframeworks import WebFramework
+
+class MyWebFramework(WebFramework):
+    #TODO: Implement abstract methods...
+    pass
+
+mest = Mest(web_framework=MyWebFramework())
+```
+
+<a name="production"></a>
+## Running In Production
+It's not recommended to use `mest.run()` for production.
+
+gunicorn with gevent works well for most use-cases:
+
+`pip install gunicorn[gevent]`
+
+server your application: `app.py`:
+```python
+mest = Mest()
+app = mest.app
+```
+
+Run: `gunicorn -b 0.0.0.0:5000 -k gevent -w 4 app:app`
