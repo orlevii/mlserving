@@ -15,4 +15,3 @@ class MestPredictorTest(unittest.TestCase):
         result = test_model.create_predictor().predict(None)
 
         self.assertEqual(result.data, expected_result)
-
