@@ -1,11 +1,16 @@
+import logging
 import os
 from random import randint
 from typing import Any, Union
+from unittest.mock import MagicMock
 from wsgiref import simple_server
+from wsgiref.simple_server import WSGIRequestHandler
 
 from mest.api import Response
 from mest.models import BaseModel
 from mest.predictors import PredictorBase
+
+logging.getLogger('mest').disabled = True
 
 
 class MyTestModel(BaseModel):
@@ -34,4 +39,5 @@ def current_file_path():
 def create_test_server(app):
     port = randint(1000, 9999)
     httpd = simple_server.make_server('0.0.0.0', port, app)
+    WSGIRequestHandler.log_message = MagicMock()
     return httpd

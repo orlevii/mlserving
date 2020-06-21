@@ -1,8 +1,8 @@
 import abc
 from http import HTTPStatus
+from typing import Any, Union
 
 from mest.api import Response
-from typing import Any, Union
 
 
 class PredictorBase:

@@ -1,5 +1,3 @@
-import json
-
 from falcon import Request, Response
 
 from mest.app.health import HealthChecker
