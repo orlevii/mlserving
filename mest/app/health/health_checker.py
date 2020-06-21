@@ -1,15 +1,9 @@
-from __future__ import annotations
-
 import logging
 from http import HTTPStatus
-from typing import TYPE_CHECKING
 
 from mest.api import Response
 from mest.app.state import runtime_state
 from .status import Unhealthy
-
-if TYPE_CHECKING:
-    from mest.models import BaseModel
 
 
 def _full_name(model):
@@ -19,7 +13,7 @@ def _full_name(model):
 
 class HealthChecker:
     @classmethod
-    def run(cls, model: BaseModel) -> Response:
+    def run(cls, model: 'BaseModel') -> Response:
         if runtime_state.is_shutting_down():
             return Response(status=HTTPStatus.SERVICE_UNAVAILABLE,
                             data={'message': 'Shutting down...'})
@@ -36,7 +30,7 @@ class HealthChecker:
                         status=HTTPStatus.OK)
 
     @staticmethod
-    def __model_health(model: BaseModel):
+    def __model_health(model: 'BaseModel'):
         try:
             return model.health_status()
         except Exception as e:
