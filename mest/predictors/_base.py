@@ -1,11 +1,16 @@
 import abc
 from http import HTTPStatus
-from typing import Any, Union
+from typing import Any, Union, Optional
 
-from mest.api import Response
+from mest.api import Response, validate_schema
 
 
 class PredictorBase:
+    """
+    The base predictor class, orchestrates the prediction flow
+    """
+    REQUEST_SCHEMA: Optional[dict] = None
+
     def __init__(self, model):
         self.model = model
 
@@ -28,6 +33,10 @@ class PredictorBase:
             return self.error_response(e)
 
     def before_request(self, input_data: dict) -> Union[Any, Response]:
+        if self.REQUEST_SCHEMA is not None:
+            input_data = validate_schema(input_data=input_data,
+                                         schema=self.REQUEST_SCHEMA)
+
         return input_data
 
     def pre_process(self, features: Any) -> Union[Any, Response]:
@@ -40,6 +49,7 @@ class PredictorBase:
     def post_process(self, prediction) -> Response:
         return Response(data=prediction)
 
-    def error_response(self, e: Exception):
+    @staticmethod
+    def error_response(e: Exception):
         return Response(data={'error': str(e)},
                         status=HTTPStatus.INTERNAL_SERVER_ERROR)

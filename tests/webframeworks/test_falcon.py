@@ -61,7 +61,8 @@ class MestFalconTest(unittest.TestCase):
 
         response = requests.post(self.fail_inference_route, json=req_data)
         self.assertEqual(response.status_code, 500)
-        self.assertEqual(response.json(), {'error': FailModel.BEFORE_REQUEST_ERROR})
+
+        self.assertIn('error', response.json())
 
     def test_rout_does_not_exists(self):
         response = requests.get(f'{self.health_url}2')

@@ -5,7 +5,6 @@ from mest.predictors import PredictorBase
 
 class FailModel(BaseModel):
     HEALTH_ERROR = 'Unhealthy model...'
-    BEFORE_REQUEST_ERROR = 'Could not process input_data'
 
     def create_predictor(self):
         return FailModelPredictor(self)
@@ -15,12 +14,13 @@ class FailModel(BaseModel):
 
 
 class FailModelPredictor(PredictorBase):
+    REQUEST_SCHEMA = {
+        'some_required_field': {'type': 'float', 'required': True}
+    }
+
     def __init__(self, model):
         self.model: FailModel = None
         super().__init__(model)
-
-    def before_request(self, input_data: dict):
-        raise RuntimeError(self.model.BEFORE_REQUEST_ERROR)
 
     def infer(self, features) -> float:
         return 6.0

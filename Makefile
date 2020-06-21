@@ -6,7 +6,7 @@ init:
 	pip install -r requirements_dev.txt
 
 test:
-	coverage run -m unittest discover -v
+	coverage run --source ./mest -m unittest discover -v
 
 lint:
 	pip install flake8
