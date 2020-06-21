@@ -3,19 +3,66 @@ ML Models on REST.
 
 A framework for developing a realtime model-inference service.
 
-Allows you to set up an inference-endpoint for you ML Model easily.
-
-Mest uses `Flask` for creating a lightweight WSGI web application, designed to run on Kubernetes
+Allows you to set up an inference-endpoint for you ML Model easily. 
 
 ## Table of Contents:
 1. [Installation](#intallation)
-2. [Basic Setup](#basic_setup)
-3. [Your First Endpoint](#endpoints)
-4. [Models](#models)
-5. [Logging](#logging)
-6. [CLI Commands](#cli_cmd)
+2. [Serving Models](#serving_models)
 
 <a name="intallation"></a>
 ## Installation
 
 * Run: `pip install mest`
+
+<a name="serving_models"></a>
+## Serving Models
+Serving models is easy, by implementing simple interfaces, you can set up endpoints in no time.
+Just implement your business-logic, mest takes care of everything else.
+
+`BaseModel` - Represents your model artifacts and everything needed in order to run inference
+`BasePredictor` -  Given a `BaseModel` implements the inference flow:
+1. pre_process - receives the payload from the request, makes processing (if needed). Returns post-processed features
+2. infer - receives post-process features, returns the prediction
+3. post_process - receives the prediction, and returns the final response the client will receive.
+
+Simple example of serving scikit-learn `LogisticRegression` model
+```python
+from mest import Mest
+from mest.models import BaseModel
+from mest.predictors import BasePredictor
+from mest.api import Response
+
+import joblib # for deserialization saved models 
+
+class MyModel(BaseModel):
+    def __init__(self):
+        # Here you can load your model-artifacts, weights, etc...
+        self.logistic_regression = joblib.load('./models/logistic_regression.pkl')
+    
+    # Map your model to your predictor
+    def create_predictor(self) :
+        return MyPredictor(self)
+
+
+class MyPredictor(BasePredictor):
+    """
+    BasePredictor has a constructor that accepts BaseModel
+    """
+    
+    def pre_process(self, input_data):
+        return input_data['features']
+
+    def infer(self, processed_data):
+        return self.model.logistic_regression.predict_proba(processed_data)[0]
+    
+    def post_process(self, prediction) -> Response:
+        return Response(
+            data={'probability': prediction}
+        )
+
+mest = Mest()
+mest.add_inference_handler(MyModel(), '/api/v1/predict')
+mest.run()
+```
+This example assumes your endpoint receives post-processed features.
+

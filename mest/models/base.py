@@ -2,7 +2,7 @@ from abc import abstractmethod
 from typing import NoReturn
 
 from mest.app.health import HealthStatus, Healthy
-from mest.predictors import PredictorBase
+from mest.predictors import BasePredictor
 
 
 class BaseModel:
@@ -12,7 +12,7 @@ class BaseModel:
     """
 
     @abstractmethod
-    def create_predictor(self) -> PredictorBase:
+    def create_predictor(self) -> BasePredictor:
         """
         @return: A new instance of your predictor
         This method will be called every inference.

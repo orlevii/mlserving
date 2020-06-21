@@ -8,7 +8,7 @@ from wsgiref.simple_server import WSGIRequestHandler
 
 from mest.api import Response
 from mest.models import BaseModel
-from mest.predictors import PredictorBase
+from mest.predictors import BasePredictor
 
 logging.getLogger('mest').disabled = True
 
@@ -23,7 +23,7 @@ class MyTestModel(BaseModel):
             self.model = fs.read()
 
 
-class MyTestPredictor(PredictorBase):
+class MyTestPredictor(BasePredictor):
     def __init__(self, model):
         self.model: MyTestModel = None  # Just for type annotation
         super().__init__(model)

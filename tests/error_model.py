@@ -1,6 +1,6 @@
 from mest.app.health import Unhealthy
 from mest.models import BaseModel
-from mest.predictors import PredictorBase
+from mest.predictors import BasePredictor
 
 
 class FailModel(BaseModel):
@@ -13,7 +13,7 @@ class FailModel(BaseModel):
         return Unhealthy(self.HEALTH_ERROR)
 
 
-class FailModelPredictor(PredictorBase):
+class FailModelPredictor(BasePredictor):
     REQUEST_SCHEMA = {
         'some_required_field': {'type': 'float', 'required': True}
     }

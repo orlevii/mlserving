@@ -1,6 +1,6 @@
 from mest.api import Response
 from mest.models import BaseModel
-from mest.predictors import PredictorBase
+from mest.predictors import BasePredictor
 
 
 class MyModel(BaseModel):
@@ -15,7 +15,7 @@ class MyModel(BaseModel):
         return MyPredictor(self)
 
 
-class MyPredictor(PredictorBase):
+class MyPredictor(BasePredictor):
     def __init__(self, model):
         self.model: MyModel = None
         super().__init__(model)

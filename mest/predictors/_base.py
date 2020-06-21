@@ -5,7 +5,7 @@ from typing import Any, Union, Optional
 from mest.api import Response, validate_schema
 
 
-class PredictorBase:
+class BasePredictor:
     """
     The base predictor class, orchestrates the prediction flow
     """
