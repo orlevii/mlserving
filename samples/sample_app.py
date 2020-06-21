@@ -41,6 +41,8 @@ class MyPredictor(PredictorBase):
 
 
 mest = Mest()
+app = mest.app  # For gunicorn
+
 mest.add_inference_handler(MyModel(), '/api/v1/predict')
 mest.add_health_handler(MyModel(), '/api/v1/ping')
 
