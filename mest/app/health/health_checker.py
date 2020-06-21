@@ -35,4 +35,4 @@ class HealthChecker:
             return model.health_status()
         except Exception as e:
             logging.getLogger('mest').warning(e)
-            return Unhealthy('Could not check model: {}'.format(_full_name(model)))
+            return Unhealthy(f'Could not check model: {_full_name(model)}')

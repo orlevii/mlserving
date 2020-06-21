@@ -17,6 +17,7 @@ class MyModel(BaseModel):
 
 class MyPredictor(PredictorBase):
     def __init__(self, model):
+        self.model: MyModel = None
         super().__init__(model)
 
     def pre_process(self, input_data: dict):
