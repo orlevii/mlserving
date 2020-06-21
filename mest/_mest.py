@@ -39,8 +39,8 @@ class Mest(object):
 
     def run(self, host='0.0.0.0', port=5000):
         with simple_server.make_server(host, port, self.app) as httpd:
-            self.logger.info(f'Running development server on: http://{host}:{port}/')
-            self.logger.warning(f'NOTICE! Running development server on production environment is not recommended.')
+            self.logger.info('Running development server on: http://{}:{}/'.format(host, port))
+            self.logger.warning('NOTICE! Running development server on production environment is not recommended.')
             httpd.serve_forever()
 
     @property
@@ -74,7 +74,7 @@ class Mest(object):
     def get_default_error_handler(self):
         def handler(e: Exception) -> Response:
             self.logger.exception(e)
-            return Response(data={'message': f'{type(e).__name__} {e}'.strip()},
+            return Response(data={'message': '{} {}'.format(type(e).__name__, e).strip()},
                             status=HTTPStatus.INTERNAL_SERVER_ERROR)
 
         return handler

@@ -19,7 +19,6 @@ class FailModelPredictor(PredictorBase):
     }
 
     def __init__(self, model):
-        self.model: FailModel = None
         super().__init__(model)
 
     def infer(self, features) -> float:

@@ -25,7 +25,6 @@ class MyTestModel(BaseModel):
 
 class MyTestPredictor(PredictorBase):
     def __init__(self, model):
-        self.model: MyTestModel = None  # Just for type annotation
         super().__init__(model)
 
     def infer(self, processed_data: Any) -> Union[Any, Response]:

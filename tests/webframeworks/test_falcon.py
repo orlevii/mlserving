@@ -29,10 +29,10 @@ class MestFalconTest(unittest.TestCase):
         t.start()
 
     def setUp(self):
-        self.health_url = f'http://localhost:{self.port}/api/v1/health'
-        self.fail_health_url = f'http://localhost:{self.port}/api/v1/health_error'
-        self.inference_route = f'http://localhost:{self.port}/api/v1/predict'
-        self.fail_inference_route = f'http://localhost:{self.port}/api/v1/predict_error'
+        self.health_url = 'http://localhost:{}/api/v1/health'.format(self.port)
+        self.fail_health_url = 'http://localhost:{}/api/v1/health_error'.format(self.port)
+        self.inference_route = 'http://localhost:{}/api/v1/predict'.format(self.port)
+        self.fail_inference_route = 'http://localhost:{}/api/v1/predict_error'.format(self.port)
 
     def test_health_route(self):
         response = requests.get(self.health_url)
@@ -65,7 +65,7 @@ class MestFalconTest(unittest.TestCase):
         self.assertIn('error', response.json())
 
     def test_rout_does_not_exists(self):
-        response = requests.get(f'{self.health_url}2')
+        response = requests.get('{}2'.format(self.health_url))
         self.assertEqual(response.status_code, 404)
 
     @classmethod

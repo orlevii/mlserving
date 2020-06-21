@@ -40,4 +40,4 @@ class Response:
         if isinstance(self.status, int):
             s = HTTPStatus(self.status)
 
-        return f'{s.value} - {s.phrase}'
+        return '{} - {}'.format(s.value, s.phrase)

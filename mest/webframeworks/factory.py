@@ -7,7 +7,7 @@ class WebFrameworkFactory:
     def create(name: str) -> WebFramework:
         framework_creator = FRAMEWORKS.get(name)
         if framework_creator is None:
-            raise NotImplementedError(f'Framework {name} is not implemented')
+            raise NotImplementedError('Framework {} is not implemented'.format(name))
 
         return framework_creator()
 
