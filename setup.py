@@ -40,7 +40,6 @@ setup(
                  'Operating System :: OS Independent',
                  'Programming Language :: Python',
                  'Programming Language :: Python :: 3',
-                 'Programming Language :: Python :: 3.5',
                  'Programming Language :: Python :: 3.6',
                  'Programming Language :: Python :: 3.7',
                  'Programming Language :: Python :: 3.8',
@@ -52,6 +51,6 @@ setup(
 
     # We will also need a readme eventually (there will be a warning)
     long_description_content_type='text/markdown',
-    python_requires='>=3.5',
+    python_requires='>=3.6',
     long_description=long_description
 )
