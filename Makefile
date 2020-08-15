@@ -1,7 +1,6 @@
 .PHONY: help clean dev docs package test
 
 init:
-	pip install --upgrade pip
 	pip install -e .
 	pip install -r requirements_dev.txt
 
