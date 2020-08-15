@@ -3,22 +3,23 @@ from http import HTTPStatus
 
 from mest.api import Response
 from mest.app.state import runtime_state
+from .health_handler import HealthHandler
 from .status import Unhealthy
 
 
-def _full_name(model):
-    t = type(model)
+def _full_name(health_checker):
+    t = type(health_checker)
     return '{}.{}'.format(t.__module__, t.__name__).strip('.')
 
 
-class HealthChecker:
+class HealthCheckRunner:
     @classmethod
-    def run(cls, model: 'BaseModel') -> Response:
+    def run(cls, health_checker: HealthHandler) -> Response:
         if runtime_state.is_shutting_down():
             return Response(status=HTTPStatus.SERVICE_UNAVAILABLE,
                             data={'message': 'Shutting down...'})
 
-        health_status = cls.__model_health(model)
+        health_status = cls.__get_health(health_checker)
 
         if not health_status.healthy:
             return Response(status=HTTPStatus.SERVICE_UNAVAILABLE,
@@ -30,9 +31,9 @@ class HealthChecker:
                         status=HTTPStatus.OK)
 
     @staticmethod
-    def __model_health(model: 'BaseModel'):
+    def __get_health(health_checker: HealthHandler):
         try:
-            return model.health_status()
+            return health_checker.health_check()
         except Exception as e:
             logging.getLogger('mest').warning(e)
-            return Unhealthy(f'Could not check model: {_full_name(model)}')
+            return Unhealthy(f'Could not health-check: {_full_name(health_checker)}')

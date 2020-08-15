@@ -1,15 +1,14 @@
 from falcon import Request, Response
 
-from mest.app.health import HealthChecker
-from mest.models import BaseModel
+from mest.app.health import HealthCheckRunner, HealthHandler
 
 
 class HealthResource:
-    def __init__(self, model: BaseModel):
-        self.model = model
+    def __init__(self, health_handler: HealthHandler):
+        self.health_handler = health_handler
 
     def on_get(self, _: Request, res: Response):
-        health_resp = HealthChecker.run(self.model)
+        health_resp = HealthCheckRunner.run(self.health_handler)
 
         res.status = health_resp.status_string
         res.body = health_resp.text

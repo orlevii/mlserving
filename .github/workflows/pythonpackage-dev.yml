@@ -13,6 +13,7 @@ jobs:
         python-version: 3.7
     - name: Lint with flake8
       run: |
+        pip install -r requirements_dev.txt
         make lint
 
   build:

@@ -10,36 +10,26 @@ with open('README.md', 'r') as fh:
 exec(open('mest/version.py').read())
 
 setup(
-    # Needed to silence warnings (and to be pythona worthwhile package)
     name='mest',
-    # Needed to actually package something
-    # You can just specify the packages manually here if your project is
-    # simple. Or you can use find_packages().
-    packages=setuptools.find_packages(exclude='tests'),
+    packages=setuptools.find_packages(exclude=['tests', 'examples']),
 
     # Project URL
     url='https://github.com/orlevi111/mest',
 
-    # author
+    # Author
     author='Or Levi',
     author_email='orlevi128@gmail.com',
     # Needed for dependencies
-    install_requires=['Cerberus==1.3.*'],
-
+    install_requires=['Cerberus==1.3.*', 'falcon==2.*'],
     extras_require={
         'falcon': ['falcon==2.*']
     },
 
-    # *strongly* suggested for sharing
+    # Package version
     version=__version__,
-    # The license can be anything you like
-    # Choose your license
-    license='LICENCE',
-
+    license='MIT',
     description='A framework for developing a realtime model-inference service.',
-
     data_files=[('', ['README.md'])],
-
     # See https://pypi.python.org/pypi?%3Aaction=list_classifiers
     classifiers=['Development Status :: 3 - Alpha',
                  'Environment :: Web Environment',
@@ -62,6 +52,6 @@ setup(
 
     # We will also need a readme eventually (there will be a warning)
     long_description_content_type='text/markdown',
-
+    python_requires='>=3.5',
     long_description=long_description
 )

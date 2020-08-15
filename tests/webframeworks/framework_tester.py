@@ -5,8 +5,8 @@ import requests
 
 from mest import Mest
 from tests.common import create_test_server
-from tests.complex_model import MyModel
-from tests.error_model import FailModel
+from tests.complex_predictor import MyPredictor
+from tests.error_predictor import FailPredictor, FailHealthHandler
 
 
 class BaseFrameworkTester:
@@ -20,11 +20,11 @@ class BaseFrameworkTester:
     @classmethod
     def setUpClass(cls):
         cls.mest = Mest(framework=cls.FRAMEWORK)
-        cls.mest.add_health_handler(MyModel(), '/api/v1/health')
-        cls.mest.add_inference_handler(MyModel(), '/api/v1/predict')
-        cls.mest.add_health_handler(FailModel(), '/api/v1/health_error')
-        cls.mest.add_inference_handler(FailModel(), '/api/v1/predict_error')
-        cls.test_server = create_test_server(cls.mest.app)
+        cls.mest.add_inference_handler('/api/v1/predict', MyPredictor())
+        cls.mest.add_health_handler('/api/v1/health')
+        cls.mest.add_inference_handler('/api/v1/predict_error', FailPredictor())
+        cls.mest.add_health_handler('/api/v1/health_error', FailHealthHandler())
+        cls.test_server = create_test_server(cls.mest)
         cls.port = cls.test_server.server_port
         t = threading.Thread(target=cls.test_server.serve_forever)
         t.start()
@@ -55,7 +55,7 @@ class BaseFrameworkTester:
     def test_health_route_with_error(self):
         response = requests.get(self.fail_health_url)
         self.assertEqual(response.status_code, 503)
-        self.assertEqual(response.json(), {'message': FailModel.HEALTH_ERROR})
+        self.assertEqual(response.json(), {'message': FailHealthHandler.HEALTH_ERROR})
 
     def test_inference_route_with_error(self):
         req_data = {}

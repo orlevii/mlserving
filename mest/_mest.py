@@ -6,8 +6,11 @@ from typing import Union
 from wsgiref import simple_server
 
 from .api import Response
+from .app.health import DefaultHealthHandler
 from .app.state import runtime_state
 from .webframeworks import WebFramework, WebFrameworkFactory
+
+default_health_handler = DefaultHealthHandler()
 
 
 class Mest(object):
@@ -31,16 +34,16 @@ class Mest(object):
         err_handler = self.get_default_error_handler()
         self.web_framework.set_error_handler(err_handler)
 
-    def add_inference_handler(self, model, rule, **kwargs):
-        self.web_framework.add_inference_handler(model, rule, **kwargs)
+    def add_inference_handler(self, rule, predictor, **kwargs):
+        self.web_framework.add_inference_handler(rule, predictor, **kwargs)
 
-    def add_health_handler(self, model, rule, **kwargs):
-        self.web_framework.add_health_handler(model, rule, **kwargs)
+    def add_health_handler(self, rule, health_handler=default_health_handler, **kwargs):
+        self.web_framework.add_health_handler(rule, health_handler, **kwargs)
 
     def run(self, host='0.0.0.0', port=5000):
-        with simple_server.make_server(host, port, self.app) as httpd:
+        with simple_server.make_server(host, port, self) as httpd:
             self.logger.info(f'Running development server on: http://{host}:{port}/')
-            self.logger.warning(f'NOTICE! Running development server on production environment is not recommended.')
+            self.logger.warning('NOTICE! Running development server on production environment is not recommended.')
             httpd.serve_forever()
 
     @property
@@ -59,9 +62,11 @@ class Mest(object):
         logger.addHandler(stdout_handler)
         return logger
 
-    @property
-    def app(self):
-        return self.web_framework.app
+    def __call__(self, env, start_response):
+        """
+        For WSGI application
+        """
+        return self.web_framework.app(env, start_response)
 
     @staticmethod
     def _handle_sigterm(logger):

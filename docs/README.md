@@ -30,51 +30,39 @@ Just implement your business-logic, mest takes care of everything else.
 Simple example of serving scikit-learn `LogisticRegression` model
 ```python
 from mest import Mest
-from mest.models import BaseModel
-from mest.predictors import BasePredictor
+from mest.predictors import PredictorBase
 from mest.api import Response
 
 import joblib # for deserialization saved models 
 
-class MyModel(BaseModel):
-    def __init__(self):
-        # Here you can load your model-artifacts, weights, etc...
-        self.logistic_regression = joblib.load('./models/logistic_regression.pkl')
-    
-    # Map your model to your predictor
-    def create_predictor(self) :
-        return MyPredictor(self)
 
-
-class MyPredictor(BasePredictor):
+class MyPredictor(PredictorBase):
     """
     BasePredictor has a constructor that accepts BaseModel
     """
+    def __init__(self):
+        self.model = joblib.load('./models/logistic_regression.pkl')
     
-    def pre_process(self, input_data):
+    def pre_process(self, input_data, req):
         return input_data['features']
 
     def infer(self, processed_data):
-        return self.model.logistic_regression.predict_proba(processed_data)[0]
+        return self.model.predict_proba(processed_data)[0]
     
-    def post_process(self, prediction) -> Response:
-        return Response(
-            data={'probability': prediction}
-        )
+    def post_process(self, prediction, req):
+        return {'probability': prediction}
 
-mest = Mest()
-mest.add_inference_handler(MyModel(), '/api/v1/predict')
-mest.run()
+app = Mest()
+app.add_inference_handler(MyPredictor(), '/api/v1/predict')
+app.run()
 ```
 This example assumes your endpoint receives post-processed features.
 
-`mest.run()` - Will start up development server, by default it listens on port 5000
+`app.run()` - Will start up development server, by default it listens on port 5000
 
 <a name="web_frameworks"></a>
 ## Web Frameworks
 Currently, `falcon` is the only WebFramework implemented.
-
-Install mest with falcon: `pip install mest[falcon]`
  
 You can implement your own web-framework and pass it as a parameter
 
@@ -86,12 +74,12 @@ class MyWebFramework(WebFramework):
     #TODO: Implement abstract methods...
     pass
 
-mest = Mest(web_framework=MyWebFramework())
+app = Mest(web_framework=MyWebFramework())
 ```
 
 <a name="production"></a>
 ## Running In Production
-It's not recommended to use `mest.run()` for production.
+It's not recommended to use `app.run()` for production.
 
 gunicorn with gevent works well for most use-cases:
 
@@ -103,10 +91,7 @@ from mest import Mest
 # other imports ...
 
 
-mest = Mest()
-
-# Expose app for gunicorn
-app = mest.app
+app = Mest()
 ```
 
 Run: `gunicorn -b 0.0.0.0:5000 -k gevent -w 4 app:app`
