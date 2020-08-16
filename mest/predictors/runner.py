@@ -4,24 +4,24 @@ from ..api import Request, Response
 
 
 class PredictorRunner:
+    RUN_ORDER = [
+        'before_request',
+        'pre_process',
+        'predict',
+        'post_process'
+    ]
+
     @classmethod
     def run_inference(cls, predictor: PredictorBase, req: Request) -> Response:
         try:
-            features = predictor.before_request(req.payload, req)
-            if isinstance(features, Response):
-                return features
+            result = req.payload
+            for method_name in cls.RUN_ORDER:
+                method = getattr(predictor, method_name)
+                result = method(result, req)
 
-            processed_data = predictor.pre_process(features, req)
-            if isinstance(processed_data, Response):
-                return processed_data
+                if isinstance(result, Response):
+                    return result
 
-            prediction = predictor.predict(processed_data, req)
-            if isinstance(prediction, Response):
-                return prediction
-
-            post_processed = predictor.post_process(prediction, req)
-            if isinstance(post_processed, Response):
-                return post_processed
-            return Response(data=post_processed)
+            return Response(data=result)
         except Exception as e:
             return error_response(e)

@@ -15,8 +15,8 @@ def request_schema(schema: dict):
 class RequestValidator:
     @staticmethod
     def validate_schema(predictor_cls, input_data):
-        if hasattr(predictor_cls, '_schema_func'):
-            func = predictor_cls._schema_func
+        func = getattr(predictor_cls, '_schema_func', None)
+        if func is not None:
             try:
                 return func(input_data)
             except Exception as e:
