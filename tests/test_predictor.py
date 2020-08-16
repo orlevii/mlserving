@@ -2,6 +2,7 @@ import unittest
 
 from mest.api import Request
 from mest.predictors import RESTPredictor
+from mest.predictors.runner import PredictorRunner
 
 
 class TestPredictor(RESTPredictor):
@@ -18,6 +19,6 @@ class MestPredictorTest(unittest.TestCase):
 
     def test_simple_predict(self):
         expected_result = '42'
-        result = TestPredictor().run({}, Request(payload={}))
+        result = PredictorRunner.run_inference(TestPredictor(), Request(payload={}))
 
         self.assertEqual(result.data, expected_result)

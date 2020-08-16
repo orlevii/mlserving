@@ -2,6 +2,7 @@ import falcon as f
 
 from mest.api import Request
 from mest.predictors import RESTPredictor
+from mest.predictors.runner import PredictorRunner
 
 
 class InferenceResource:
@@ -11,7 +12,7 @@ class InferenceResource:
     def on_post(self, req: f.Request, res: f.Response):
         mest_req = Request(req.media, req.headers)
 
-        response = self.predictor.run(mest_req.payload, mest_req)
+        response = PredictorRunner.run_inference(self.predictor, mest_req)
         res.body = response.text
         res.status = response.status_string
 
