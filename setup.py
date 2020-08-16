@@ -11,7 +11,7 @@ exec(open('mest/version.py').read())
 
 setup(
     name='mest',
-    packages=setuptools.find_packages(exclude=['tests', 'examples']),
+    packages=setuptools.find_packages(exclude=['tests*', 'examples*']),
 
     # Project URL
     url='https://github.com/orlevi111/mest',
