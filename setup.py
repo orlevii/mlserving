@@ -20,10 +20,7 @@ setup(
     author='Or Levi',
     author_email='orlevi128@gmail.com',
     # Needed for dependencies
-    install_requires=['Cerberus==1.3.*', 'falcon==2.*'],
-    extras_require={
-        'falcon': ['falcon==2.*']
-    },
+    install_requires=['falcon==2.*', 'validr==1.2.*'],
 
     # Package version
     version=__version__,
@@ -49,7 +46,6 @@ setup(
                  'Topic :: Software Development :: Libraries :: Python Modules'
                  ],
 
-    # We will also need a readme eventually (there will be a warning)
     long_description_content_type='text/markdown',
     python_requires='>=3.6',
     long_description=long_description

@@ -1,7 +1,15 @@
 from mest.api import Response, Request
+from mest.api import request_schema
 from mest.predictors import RESTPredictor
 
+REQUEST_SCHEMA = {
+    'feature1': 'float',
+    'feature2': 'float',
+    'feature3': 'float'
+}
 
+
+@request_schema(REQUEST_SCHEMA)
 class MyPredictor(RESTPredictor):
     def __init__(self):
         self.weights = [1, 1, 1]

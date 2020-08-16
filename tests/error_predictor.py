@@ -1,12 +1,14 @@
-from mest.api import Request
+from mest.api import Request, request_schema
 from mest.app.health import Unhealthy, HealthHandler, HealthStatus
 from mest.predictors import RESTPredictor
 
+REQUEST_SCHEMA = {
+    "some_required_field": "float"
+}
 
+
+@request_schema(REQUEST_SCHEMA)
 class FailPredictor(RESTPredictor):
-    REQUEST_SCHEMA = {
-        'some_required_field': {'type': 'float', 'required': True}
-    }
 
     def predict(self, processed_data, req: Request):
         return 6.0
