@@ -3,5 +3,16 @@ description: mlserving - Serving ML-Models Made Easy
 
 remote_theme: rundocs/jekyll-rtd-theme
 
+copyright:
+  revision: true
+
+edit: true
+addons_branch: true
+
+addons:
+  - github
+  - i18n
+  - analytics
+
 exclude:
   - .gitignore
