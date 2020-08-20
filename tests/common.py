@@ -1,30 +1,14 @@
-import os
+import logging
+from random import randint
+from unittest.mock import MagicMock
+from wsgiref import simple_server
+from wsgiref.simple_server import WSGIRequestHandler
 
-from mest.models import GenericModel
-from mest.app import MestConfig
-
-
-class MyTestModel(GenericModel):
-    def init(self, path):
-        file_path = os.path.join(path, 'model.txt')
-        with open(file_path, 'r') as fs:
-            self.model = fs.read()
-
-    def infer(self, *args, **kwargs):
-        return self.model
+logging.getLogger('mlserving').disabled = True
 
 
-def current_file_path():
-    return os.path.dirname(os.path.abspath(__file__))
-
-
-def generate_mest_config() -> MestConfig:
-    return MestConfig(service_name='test_mest',
-                      listen_port=1234)
-
-
-def generate_mest_config_with_model() -> MestConfig:
-    conf = generate_mest_config()
-    conf.local_model_directory_path = os.path.join(current_file_path(), '_models')
-
-    return conf
+def create_test_server(app):
+    port = randint(1000, 9999)
+    httpd = simple_server.make_server('0.0.0.0', port, app)
+    WSGIRequestHandler.log_message = MagicMock()
+    return httpd

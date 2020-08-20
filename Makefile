@@ -1,25 +1,14 @@
 .PHONY: help clean dev docs package test
 
-help:
-	@echo "This project assumes that an active Python virtualenv is present."
-	@echo "The following make targets are available:"
-	@echo "	 dev 	install all deps for dev env"
-	@echo "	 test	run all tests with coverage"
-	@echo "	 lint	run lint with flake8"
-
-dev:
-	pip install --upgrade pip
-	pip install coverage
-	pip install -r requirements.txt
+init:
 	pip install -e .
+	pip install -r requirements_dev.txt
 
 test:
-	FLASK_ENV="testing" coverage run -m unittest discover -v
-	rm .coverage
+	coverage run --source ./mlserving -m unittest discover -s tests -v
 
 lint:
-	pip install flake8
 	# stop the build if there are Python syntax errors or undefined names
-	flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics --builtins="__version__"
-	# exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
-	flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics --builtins="__version__"
+	flake8 . --count --ignore F401,F841,W504 --show-source
+	# exit-zero treats all errors as warnings.
+	flake8 . --count --exit-zero --max-complexity=10
