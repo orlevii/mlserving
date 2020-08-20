@@ -6,7 +6,7 @@ from .health_resource import HealthResource
 from .inference_resource import InferenceResource
 
 
-class Falcon(WebFramework):
+class FalconFramework(WebFramework):
 
     def __init__(self):
         self._app = falcon.API()

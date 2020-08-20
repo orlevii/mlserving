@@ -14,8 +14,8 @@ class WebFrameworkFactory:
     @staticmethod
     def _create_falcon():
         try:
-            from .falcon import Falcon
-            return Falcon()
+            from .falcon import FalconFramework
+            return FalconFramework()
         except ImportError:
             print('falcon >= 2 is required in order falcon as web-framework')
 
