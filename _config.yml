@@ -14,5 +14,8 @@ addons:
   - i18n
   - analytics
 
+readme_index:
+  with_frontmatter: true
+
 exclude:
   - .gitignore
