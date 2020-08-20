@@ -14,7 +14,7 @@ setup(
     packages=setuptools.find_packages(exclude=['tests*', 'examples*']),
 
     # Project URL
-    url='https://github.com/orlevi111/mlserving',
+    url='https://github.com/orlevii/mlserving',
 
     # Author
     author='Or Levi',
