@@ -1,5 +1,5 @@
-# Mest
-ML Models on REST.
+# ML Serving
+Serving ML Models
 
 A framework for developing a realtime model-inference service.
 
@@ -14,12 +14,12 @@ Allows you to set up an inference-endpoint for you ML Model easily.
 <a name="intallation"></a>
 ## Installation
 
-* Run: `pip install mest`
+* Run: `pip install mlserving`
 
 <a name="serving_models"></a>
 ## Serving Models
 Serving models is easy, by implementing simple interfaces, you can set up endpoints in no time.
-Just implement your business-logic, mest takes care of everything else.
+Just implement your business-logic, mlserving takes care of everything else.
 
 `BaseModel` - Represents your model artifacts and everything needed in order to run inference
 `BasePredictor` -  Given a `BaseModel` implements the inference flow:
@@ -29,9 +29,9 @@ Just implement your business-logic, mest takes care of everything else.
 
 Simple example of serving scikit-learn `LogisticRegression` model
 ```python
-from mest import Mest
-from mest.predictors import PredictorBase
-from mest.api import Response
+from mlserving import ServingApp
+from mlserving.predictors import PredictorBase
+from mlserving.api import Response
 
 import joblib # for deserialization saved models 
 
@@ -52,7 +52,7 @@ class MyPredictor(PredictorBase):
     def post_process(self, prediction, req):
         return {'probability': prediction}
 
-app = Mest()
+app = ServingApp()
 app.add_inference_handler(MyPredictor(), '/api/v1/predict')
 app.run()
 ```
@@ -67,14 +67,14 @@ Currently, `falcon` is the only WebFramework implemented.
 You can implement your own web-framework and pass it as a parameter
 
 ```python
-from mest import Mest
-from mest.webframeworks import WebFramework
+from mlserving import ServingApp
+from mlserving.webframeworks import WebFramework
 
 class MyWebFramework(WebFramework):
     #TODO: Implement abstract methods...
     pass
 
-app = Mest(web_framework=MyWebFramework())
+app = ServingApp(web_framework=MyWebFramework())
 ```
 
 <a name="production"></a>
@@ -87,11 +87,11 @@ gunicorn with gevent works well for most use-cases:
 
 server your application: `app.py`:
 ```python
-from mest import Mest
+from mlserving import ServingApp
 # other imports ...
 
 
-app = Mest()
+app = ServingApp()
 ```
 
 Run: `gunicorn -b 0.0.0.0:5000 -k gevent -w 4 app:app`

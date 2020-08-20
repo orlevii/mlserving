@@ -1,6 +1,6 @@
 from http import HTTPStatus
 
-from mest.api import Response
+from mlserving.api import Response
 
 
 def error_response(e: Exception):

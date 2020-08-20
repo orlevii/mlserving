@@ -1,7 +1,7 @@
 from abc import ABC
 
-from mest.api import Request
-from mest.api.request_validation import RequestValidator
+from mlserving.api import Request
+from mlserving.api.request_validation import RequestValidator
 from ._base import PredictorBase
 
 

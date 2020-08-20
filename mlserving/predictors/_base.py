@@ -1,7 +1,7 @@
 import abc
 from typing import Union
 
-from mest.api import Request, Response
+from mlserving.api import Request, Response
 
 
 class PredictorBase:

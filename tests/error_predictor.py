@@ -1,6 +1,6 @@
-from mest.api import Request, request_schema
-from mest.app.health import Unhealthy, HealthHandler, HealthStatus
-from mest.predictors import RESTPredictor
+from mlserving.api import Request, request_schema
+from mlserving.app.health import Unhealthy, HealthHandler, HealthStatus
+from mlserving.predictors import RESTPredictor
 
 REQUEST_SCHEMA = {
     "some_required_field": "float"

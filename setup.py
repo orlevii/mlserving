@@ -7,14 +7,14 @@ with open('README.md', 'r') as fh:
 
 # Pull version from source without importing
 # since we can't import something we haven't built yet :)
-exec(open('mest/version.py').read())
+exec(open('mlserving/version.py').read())
 
 setup(
-    name='mest',
+    name='mlserving',
     packages=setuptools.find_packages(exclude=['tests*', 'examples*']),
 
     # Project URL
-    url='https://github.com/orlevi111/mest',
+    url='https://github.com/orlevi111/mlserving',
 
     # Author
     author='Or Levi',

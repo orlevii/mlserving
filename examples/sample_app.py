@@ -1,6 +1,6 @@
-from mest import Mest
-from mest.api import Request
-from mest.predictors import RESTPredictor
+from mlserving import ServingApp
+from mlserving.api import Request
+from mlserving.predictors import RESTPredictor
 
 
 class MyPredictor(RESTPredictor):
@@ -27,7 +27,7 @@ class MyPredictor(RESTPredictor):
         }
 
 
-app = Mest()
+app = ServingApp()
 
 app.add_inference_handler('/api/v1/predict', MyPredictor())
 app.add_health_handler('/api/v1/ping')

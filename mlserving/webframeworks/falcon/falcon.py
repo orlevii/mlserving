@@ -1,6 +1,6 @@
 import falcon
 
-from mest.webframeworks.base import WebFramework
+from mlserving.webframeworks.base import WebFramework
 from .error_handler import error_handler
 from .health_resource import HealthResource
 from .inference_resource import InferenceResource

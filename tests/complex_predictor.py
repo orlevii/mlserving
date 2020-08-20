@@ -1,6 +1,6 @@
-from mest.api import Response, Request
-from mest.api import request_schema
-from mest.predictors import RESTPredictor
+from mlserving.api import Response, Request
+from mlserving.api import request_schema
+from mlserving.predictors import RESTPredictor
 
 REQUEST_SCHEMA = {
     'feature1': 'float',

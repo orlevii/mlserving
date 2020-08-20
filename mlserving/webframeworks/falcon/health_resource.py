@@ -1,6 +1,6 @@
 from falcon import Request, Response
 
-from mest.app.health import HealthCheckRunner, HealthHandler
+from mlserving.app.health import HealthCheckRunner, HealthHandler
 
 
 class HealthResource:

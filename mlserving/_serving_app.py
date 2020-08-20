@@ -13,12 +13,12 @@ from .webframeworks import WebFramework, WebFrameworkFactory
 default_health_handler = DefaultHealthHandler()
 
 
-class Mest(object):
+class ServingApp(object):
     def __init__(self,
                  framework: Union[str, WebFramework] = 'falcon',
                  **kwargs):
         """
-        Initialized mest-application
+        Initialized mlserving-application
         @param framework: The web-framework to use
             (default: "falcon")
         @param kwargs: Additional configs, currently not in use.
@@ -48,7 +48,7 @@ class Mest(object):
 
     @property
     def logger(self):
-        return logging.getLogger('mest')
+        return logging.getLogger('mlserving')
 
     @staticmethod
     def __init_logger():
@@ -57,7 +57,7 @@ class Mest(object):
         formatter = logging.Formatter('[%(asctime)s] - %(levelname)s - %(message)s')
         stdout_handler.setFormatter(formatter)
 
-        logger = logging.getLogger('mest')
+        logger = logging.getLogger('mlserving')
         logger.setLevel(logging.INFO)
         logger.addHandler(stdout_handler)
         return logger

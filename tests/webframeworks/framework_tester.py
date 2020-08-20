@@ -3,28 +3,28 @@ from random import random
 
 import requests
 
-from mest import Mest
+from mlserving import ServingApp
 from tests.common import create_test_server
 from tests.complex_predictor import MyPredictor
 from tests.error_predictor import FailPredictor, FailHealthHandler
 
 
 class BaseFrameworkTester:
-    """Test cases for mest web-frameworks"""
+    """Test cases for mlserving web-frameworks"""
     FRAMEWORK = None
 
-    mest = None
+    mlserving = None
     port = None
     test_server = None
 
     @classmethod
     def setUpClass(cls):
-        cls.mest = Mest(framework=cls.FRAMEWORK)
-        cls.mest.add_inference_handler('/api/v1/predict', MyPredictor())
-        cls.mest.add_health_handler('/api/v1/health')
-        cls.mest.add_inference_handler('/api/v1/predict_error', FailPredictor())
-        cls.mest.add_health_handler('/api/v1/health_error', FailHealthHandler())
-        cls.test_server = create_test_server(cls.mest)
+        cls.mlserving = ServingApp(framework=cls.FRAMEWORK)
+        cls.mlserving.add_inference_handler('/api/v1/predict', MyPredictor())
+        cls.mlserving.add_health_handler('/api/v1/health')
+        cls.mlserving.add_inference_handler('/api/v1/predict_error', FailPredictor())
+        cls.mlserving.add_health_handler('/api/v1/health_error', FailHealthHandler())
+        cls.test_server = create_test_server(cls.mlserving)
         cls.port = cls.test_server.server_port
         t = threading.Thread(target=cls.test_server.serve_forever)
         t.start()

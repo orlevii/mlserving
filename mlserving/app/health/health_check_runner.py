@@ -1,8 +1,8 @@
 import logging
 from http import HTTPStatus
 
-from mest.api import Response
-from mest.app.state import runtime_state
+from mlserving.api import Response
+from mlserving.app.state import runtime_state
 from .health_handler import HealthHandler
 from .status import Unhealthy
 
@@ -35,5 +35,5 @@ class HealthCheckRunner:
         try:
             return health_checker.health_check()
         except Exception as e:
-            logging.getLogger('mest').warning(e)
+            logging.getLogger('mlserving').warning(e)
             return Unhealthy(f'Could not health-check: {_full_name(health_checker)}')

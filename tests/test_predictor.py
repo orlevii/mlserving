@@ -1,8 +1,8 @@
 import unittest
 
-from mest.api import Request
-from mest.predictors import RESTPredictor
-from mest.predictors.runner import PredictorRunner
+from mlserving.api import Request
+from mlserving.predictors import RESTPredictor
+from mlserving.predictors.runner import PredictorRunner
 
 
 class TestPredictor(RESTPredictor):
@@ -11,8 +11,8 @@ class TestPredictor(RESTPredictor):
         return '42'
 
 
-class MestPredictorTest(unittest.TestCase):
-    """Test cases for mest "predictors" & "models" setup"""
+class RESTPredictorTest(unittest.TestCase):
+    """Test cases for mlserving "predictors" & "models" setup"""
 
     def setUp(self):
         pass

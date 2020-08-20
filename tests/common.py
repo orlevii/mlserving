@@ -4,7 +4,7 @@ from unittest.mock import MagicMock
 from wsgiref import simple_server
 from wsgiref.simple_server import WSGIRequestHandler
 
-logging.getLogger('mest').disabled = True
+logging.getLogger('mlserving').disabled = True
 
 
 def create_test_server(app):

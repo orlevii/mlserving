@@ -1,4 +1,4 @@
-from mest.webframeworks import WebFramework
+from mlserving.webframeworks import WebFramework
 
 
 class WebFrameworkFactory:
