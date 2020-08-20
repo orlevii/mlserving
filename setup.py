@@ -7,7 +7,7 @@ with open('README.md', 'r') as fh:
 
 # Pull version from source without importing
 # since we can't import something we haven't built yet :)
-exec(open('mlserving/version.py').read())
+exec(open('mlserving/__version__.py').read())
 
 setup(
     name='mlserving',

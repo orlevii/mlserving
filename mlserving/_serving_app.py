@@ -6,8 +6,8 @@ from typing import Union
 from wsgiref import simple_server
 
 from .api import Response
-from .app.health import DefaultHealthHandler
-from .app.state import runtime_state
+from mlserving.health import DefaultHealthHandler
+from mlserving._state import runtime_state
 from .webframeworks import WebFramework, WebFrameworkFactory
 
 default_health_handler = DefaultHealthHandler()

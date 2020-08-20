@@ -2,7 +2,7 @@ import logging
 from http import HTTPStatus
 
 from mlserving.api import Response
-from mlserving.app.state import runtime_state
+from mlserving._state import runtime_state
 from .health_handler import HealthHandler
 from .status import Unhealthy
 

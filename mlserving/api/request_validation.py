@@ -2,6 +2,10 @@ from validr import T, Compiler
 
 
 def request_schema(schema: dict):
+    """
+    :param schema: request schema dict (validr format)
+    This method compiles the request schema and attaches it on the predictor-class for future use.
+    """
     def decorator(predictor_cls):
         s = T(schema)
 

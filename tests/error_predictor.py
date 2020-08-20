@@ -1,5 +1,5 @@
 from mlserving.api import Request, request_schema
-from mlserving.app.health import Unhealthy, HealthHandler, HealthStatus
+from mlserving.health import Unhealthy, HealthHandler, HealthStatus
 from mlserving.predictors import RESTPredictor
 
 REQUEST_SCHEMA = {
