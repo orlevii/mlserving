@@ -2,8 +2,6 @@
 sort: 1
 ---
 
-# Installation
-
 ## Serving Models
 Serving models is easy, by implementing simple interfaces, you can set up endpoints in no time.
 Just implement your business-logic, mlserving takes care of everything else.
@@ -11,23 +9,20 @@ Just implement your business-logic, mlserving takes care of everything else.
 Simple example of serving scikit-learn `LogisticRegression` model
 ```python
 from mlserving import ServingApp
-from mlserving.predictors import PredictorBase
-from mlserving.api import Response
+from mlserving.predictors import RESTPredictor
 
 import joblib # for deserialization saved models 
 
 
-class MyPredictor(PredictorBase):
-    """
-    BasePredictor has a constructor that accepts BaseModel
-    """
+class MyPredictor(RESTPredictor):
     def __init__(self):
+        # Loading a saved model
         self.model = joblib.load('./models/logistic_regression.pkl')
 
     def pre_process(self, input_data, req):
         return input_data['features']
 
-    def infer(self, processed_data):
+    def predict(self, processed_data, req):
         return self.model.predict_proba(processed_data)[0]
 
     def post_process(self, prediction, req):
