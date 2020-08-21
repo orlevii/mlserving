@@ -15,7 +15,7 @@ class Predictor(TFServingPrediction, RESTPredictor):
     def pre_process(self, features: dict, req: Request):
         return {
             "instances": [
-                # TODO: fill with your tensor inputs
+                # TODO: fill your tensor inputs here
             ]
         }
 
