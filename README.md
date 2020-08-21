@@ -6,7 +6,7 @@ Serving ML Models
 Allows you to set up an inference-endpoint for your ML Model easily.
 
 Docs can found here:
-https://orlevii.github.io/mlserving/
+https://mlserving.readthedocs.io/en/latest/
 
 ## Motivation
 Data Scientists usually struggle with integrating their ML-models to production.
