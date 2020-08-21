@@ -33,7 +33,6 @@ def main():
 if __name__ == '__main__':
     main()
 
-
 """
 Setup tensorflow-serving locally with docker: https://www.tensorflow.org/tfx/serving/docker
 
