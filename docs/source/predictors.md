@@ -59,7 +59,7 @@ class MyPredictor(RESTPredictor):
     pass
 ```
 
-***validr*** syntax can be found here: https://github.com/guyskk/validr/wiki/Schema-Syntax
+***validr*** syntax can be found here: [https://github.com/guyskk/validr/wiki/Schema-Syntax](https://github.com/guyskk/validr/wiki/Schema-Syntax)
 
 ### PipelinePredictor
 Whenever your prediction is based on the result of several models, you should consider using <code>PipelinePredictor</code> for chaining models one after the other.

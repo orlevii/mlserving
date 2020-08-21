@@ -7,7 +7,7 @@ It can load saved models (ProtoBuff format) and expose an endpoint for inference
 
 Sometimes, we can't use TensorFlow serving alone as we need to make some processing before/after the inference.
 
-Read more about TensorFlow Serving: https://www.tensorflow.org/tfx/guide/serving
+Read more about TensorFlow Serving: [https://www.tensorflow.org/tfx/guide/serving](https://www.tensorflow.org/tfx/guide/serving)
 
 ### Integration
 <code>mlserving</code> allows easy integration with <code>TensorFlow Serving</code> model server.
