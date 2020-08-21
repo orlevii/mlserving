@@ -12,8 +12,8 @@ class TFServingRequestError(Exception):
 
 
 class TFServingPrediction:
-    def __init__(self, protocol='http', host='127.0.0.1', port=8501, model_name='model', predict_api_url=None,
-                 **kwargs):
+    def __init__(self, protocol='http', host='127.0.0.1', port=8501, model_name='model',
+                 predict_api_url=None, **kwargs):
         """
         :param protocol: http/https
         :param host: The tf-serving server host address
