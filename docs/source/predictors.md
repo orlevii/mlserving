@@ -89,7 +89,7 @@ class EmbeddingPredictor(RESTPredictor):
         return text
 
     def predict(self, processed_text, req):
-        # Use the processed_text and get it's embedding
+        # Use the processed_text and get its embedding
         pass
 
 class TextClassifierPredictor(RESTPredictor):
