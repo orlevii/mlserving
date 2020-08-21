@@ -13,7 +13,7 @@ Motivation
 ==================
 Data Scientists usually struggle with integrating their ML-models to production.
 
-***mlserving*** is here to make the development of model-servers easy for everyone.
+**mlserving** is here to make the development of model-servers easy for everyone.
 
 Demo Repository
 ==================
