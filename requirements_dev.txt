@@ -8,4 +8,5 @@ flake8-expression-complexity
 pep8-naming
 
 #docs
-sphinx
+sphinx<2
+recommonmark
