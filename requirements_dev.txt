@@ -10,3 +10,4 @@ pep8-naming
 #docs
 sphinx<2
 recommonmark
+sphinx_rtd_theme

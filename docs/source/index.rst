@@ -1,20 +1,37 @@
-.. mlserving documentation master file, created by
-   sphinx-quickstart on Fri Aug 21 12:14:52 2020.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
-
-Welcome to mlserving's documentation!
+=====================================
+ML Serving - Serving ML Models
 =====================================
 
-.. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+:Version: 0.1.0
+:Source Code: https://github.com/orlevii/mlserving
 
 
+mlserving is a framework for developing a realtime model-inference service.
 
-Indices and tables
+Allows you to set up an inference-endpoint for your ML Model easily.
+
+Motivation
+==================
+Data Scientists usually struggle with integrating their ML-models to production.
+
+`mlserving` is here to make the development of model-servers easy for everyone.
+
+Demo Repository
+==================
+SKLearn model: https://github.com/orlevii/mlserving-example
+
+Content
 ==================
 
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+.. toctree::
+    :maxdepth: 2
+    :caption: getting started
+    install
+    serving-models
+    predictors
+    health-check
+    running-in-prod
+
+    :caption: advanced
+    web-frameworks
+
