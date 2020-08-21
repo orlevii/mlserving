@@ -19,12 +19,9 @@ Demo Repository
 ==================
 SKLearn model: https://github.com/orlevii/mlserving-example
 
-Content
-==================
-
 .. toctree::
     :maxdepth: 2
-    :caption: getting started
+    :caption: Getting Started
 
     install
     serving-models
@@ -34,7 +31,7 @@ Content
 
 .. toctree::
     :maxdepth: 2
-    :caption: advanced
+    :caption: Advanced
 
     web-frameworks
 
