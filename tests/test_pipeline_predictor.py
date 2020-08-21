@@ -37,7 +37,7 @@ class PipelinePredictorTest(unittest.TestCase):
         self.predictor = PipelinePredictor([PredictorA(), PredictorB()])
 
     def test_successful_predict(self):
-        input_age = random() * 100
+        input_age = random() * 100 + 1
         expected_result = dict(result=(input_age / 2) ** 2)
         result = PredictorRunner.run_inference(self.predictor,
                                                Request(payload={'age': input_age}))
