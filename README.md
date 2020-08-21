@@ -1,5 +1,6 @@
 # ML Serving
-Serving ML Models
+[![PyPI version](https://badge.fury.io/py/mlserving.svg)](https://badge.fury.io/py/mlserving)
+[![Build](https://github.com/orlevii/mlserving/workflows/build/badge.svg)]()
 
 **mlserving** is a framework for developing a realtime model-inference service.
 
