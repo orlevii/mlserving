@@ -1,11 +1,11 @@
 ## Running In Production
-Although you can use `app.run()` in order start up your service, it is only recommended for local development.
+Although you can use <code>app.run()</code> in order start up your service, it is only recommended for local development.
 
-We encourage to use `gunicron` for production use.
+We encourage to use <code>gunicron</code> for production use.
 
-`gunicorn` with `gevent` is battle-tested works well for most use-cases:
+<code>gunicorn</code> with <code>gevent</code> is battle-tested works well for most use-cases:
 
-#### Installation
+#### Gunicorn Installation
 `$ pip install gunicorn[gevent]`
 
 #### Example

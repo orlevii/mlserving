@@ -26,12 +26,16 @@ Content
 .. toctree::
     :maxdepth: 2
     :caption: getting started
+
     install
     serving-models
     predictors
     health-check
     running-in-prod
 
+.. toctree::
+    :maxdepth: 2
     :caption: advanced
+
     web-frameworks
 

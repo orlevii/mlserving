@@ -1,6 +1,6 @@
 ## Health Check
 
-```ServingApp``` allows to add additional `GET` route for handling health/ping requests
+<code>ServingApp</code> allows to add additional `GET` route for handling health/ping requests
 
 ```python
 from mlserving import ServingApp
@@ -15,11 +15,11 @@ app.run()
 
 The default handler always returns `200 OK`
 
-```ServingApp``` listens to SIGTERM signal, if SIGTERM signal was sent to the process, all the health routes will start returning `503` (Useful when making a graceful shutdown to the application)
+<code>ServingApp</code> listens to SIGTERM signal, if SIGTERM signal was sent to the process, all the health routes will start returning `503` (Useful when making a graceful shutdown to the application)
 
 ### Custom Health Handlers
 
-```app.add_health_handler``` 2nd argument is an handler, so you just need to implement one.
+<code>app.add_health_handler</code> 2nd argument is an handler, so you just need to implement one.
 
 ```python
 from mlserving import ServingApp
