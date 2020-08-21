@@ -41,3 +41,9 @@ class Response:
             s = HTTPStatus(self.status)
 
         return f'{s.value} - {s.phrase}'
+
+    def get_status_code(self) -> int:
+        if isinstance(self.status, int):
+            return self.status
+
+        return self.status.value

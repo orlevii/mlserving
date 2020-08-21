@@ -12,9 +12,11 @@ class PredictorRunner:
     ]
 
     @classmethod
-    def run_inference(cls, predictor: PredictorBase, req: Request) -> Response:
+    def run_inference(cls, predictor: PredictorBase, req: Request, input_data=None) -> Response:
         try:
-            result = req.payload
+            result = input_data
+            if input_data is None:
+                result = req.payload
             for method_name in cls.RUN_ORDER:
                 method = getattr(predictor, method_name)
                 result = method(result, req)
