@@ -1,4 +1,4 @@
-name: Python Package Release
+name: release
 
 on:
   push:
