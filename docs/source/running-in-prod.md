@@ -20,6 +20,6 @@ from mlserving import ServingApp
 app = ServingApp()
 ```
 
-Run: `gunicorn -b 0.0.0.0:5000 -k gevent -w 4 app:app`
+Run: <code>$ gunicorn -b 0.0.0.0:5000 -k gevent -w 4 app:app</code>
 
 Read more [here](https://docs.gunicorn.org/en/stable/index.html)

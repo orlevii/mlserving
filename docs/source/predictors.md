@@ -1,6 +1,6 @@
 ## Predictors
 
-`PredictorBase` presents a simple interface:
+<code>PredictorBase</code> presents a simple interface:
 
 <img width="600" alt="Request Flow" src="https://user-images.githubusercontent.com/13447456/90832827-58cd6a00-e34f-11ea-84df-83f9e2a1c6ad.png">
 
