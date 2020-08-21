@@ -6,3 +6,6 @@ requests
 flake8
 flake8-expression-complexity
 pep8-naming
+
+#docs
+sphinx
