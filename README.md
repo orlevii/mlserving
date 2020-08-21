@@ -1,9 +1,9 @@
 # ML Serving
 Serving ML Models
 
-A framework for developing a realtime model-inference service.
+**mlserving** is a framework for developing a realtime model-inference service.
 
-Allows you to set up an inference-endpoint for you ML Model easily.
+Allows you to set up an inference-endpoint for your ML Model easily.
 
 Docs can found here:
 https://orlevii.github.io/mlserving/
