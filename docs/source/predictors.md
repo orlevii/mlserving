@@ -60,3 +60,53 @@ class MyPredictor(RESTPredictor):
 ```
 
 ***validr*** syntax can be found here: https://github.com/guyskk/validr/wiki/Schema-Syntax
+
+### PipelinePredictor
+Whenever your prediction is based on the result of several models, you should consider using <code>PipelinePredictor</code> for chaining models one after the other.
+
+A good example would be a text classification model.
+
+Request with input text -> text processing -> embedding -> classification
+
+```python
+from mlserving import ServingApp
+from mlserving.api import request_schema
+from mlserving.predictors import RESTPredictor, PipelinePredictor
+
+SCHEMA = {
+    'text': 'str'
+}
+
+@request_schema(SCHEMA)
+class EmbeddingPredictor(RESTPredictor):
+    def __init__(self):
+        # Load relevant resources
+        pass
+
+    def pre_process(self, features: dict, req):
+        text = features['text']
+        # Clean the text, make other processing if needed
+        return text
+
+    def predict(self, processed_text, req):
+        # Use the processed_text and get it's embedding
+        pass
+
+class TextClassifierPredictor(RESTPredictor):
+    def __init__(self):
+        # Load relevant resources
+        pass
+
+     def predict(self, features: dict, req):
+        # Make the prediction based on the text-embedding
+        pass
+        
+
+app = ServingApp()
+p = PipelinePredictor([
+        EmbeddingPredictor(),
+        TextClassifierPredictor()
+    ])
+
+app.add_inference_handler(p, '/classify_text')
+```
