@@ -7,9 +7,15 @@ except ImportError as e:
     logger.exception('Using TFServingPrediction requires requests to be installed')
 
 
+class TFServingRequestError(Exception):
+    pass
+
+
 class TFServingPrediction:
-    def __init__(self, host='127.0.0.1', port=8501, model_name='model', predict_api_url=None, **kwargs):
+    def __init__(self, protocol='http', host='127.0.0.1', port=8501, model_name='model', predict_api_url=None,
+                 **kwargs):
         """
+        :param protocol: http/https
         :param host: The tf-serving server host address
         :param port: REST-api port
         :param model_name: The name of the model to invoke
@@ -24,13 +30,13 @@ class TFServingPrediction:
         if predict_api_url:
             self.predict_api_url = predict_api_url
         else:
-            self.predict_api_url = f'http://{host}:{port}/v1/models/{model_name}:predict'
+            self.predict_api_url = f'{protocol}://{host}:{port}/v1/models/{model_name}:predict'
 
         self._requests_options = kwargs
 
     def predict(self, request_payload: dict, req):
         res = requests.post(self.predict_api_url, json=request_payload, **self._requests_options)
         if res.status_code != 200:
-            raise RuntimeError(f'Failed calling tf-serving endpoint, code: {res.status_code}, {res.content}')
+            raise TFServingRequestError(f'Failed calling tf-serving endpoint, code: {res.status_code}, {res.content}')
 
         return res.json()

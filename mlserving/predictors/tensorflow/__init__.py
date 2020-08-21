@@ -1,1 +1,1 @@
-from .http import TFServingPrediction
+from .http import TFServingPrediction, TFServingRequestError
