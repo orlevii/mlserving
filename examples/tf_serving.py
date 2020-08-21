@@ -8,7 +8,9 @@ from mlserving.predictors.tensorflow import TFServingPrediction
 class Predictor(TFServingPrediction, RESTPredictor):
     def __init__(self):
         # Initialize TFServingPrediction
+        # We don't need to load the tensorflow model here since the inference is done on TensorFlowServing
         super().__init__()
+        # TODO: load relevant resources for feature processing
 
     def pre_process(self, features: dict, req: Request):
         return {
