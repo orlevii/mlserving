@@ -5,7 +5,7 @@ init:
 	pip install -r requirements_dev.txt
 
 test:
-	coverage run --source ./mlserving -m unittest discover -s tests -v
+	coverage run -m unittest discover -s tests -v
 
 lint:
 	# stop the build if there are Python syntax errors or undefined names
