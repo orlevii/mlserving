@@ -12,7 +12,7 @@ Read more about TensorFlow Serving: [https://www.tensorflow.org/tfx/guide/servin
 ### Integration
 <code>mlserving</code> allows easy integration with <code>TensorFlow Serving</code> model server.
 
-The idea is to have a python layer that can make some processing before invoking the tf-serving endpoint.
+The idea is to have a python layer that makes some processing before invoking the tf-serving endpoint.
 
 <code>TFServingPrediction</code> implements <code>def predict</code> can be used as a mixin that handles the tf-serving request
 
