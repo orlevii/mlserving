@@ -45,4 +45,4 @@ class MyPredictor(TFServingPrediction, RESTPredictor):
         }
 ```
 
-Since </code>def predict</code> is already implemented, we just need to implement the processing layer that comes before/after the inference
+Since <code>def predict</code> is already implemented, we just need to implement the processing layer that comes before/after the inference
