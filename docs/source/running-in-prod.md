@@ -6,7 +6,9 @@ We encourage to use <code>gunicron</code> for production use.
 <code>gunicorn</code> with <code>gevent</code> is battle-tested works well for most use-cases:
 
 #### Gunicorn Installation
-`$ pip install gunicorn[gevent]`
+```bash
+$ pip install gunicorn[gevent]
+```
 
 #### Example
 Serve your application: `app.py`:
