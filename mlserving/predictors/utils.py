@@ -1,8 +1,14 @@
+import traceback
 from http import HTTPStatus
 
 from mlserving.api import Response
 
 
 def error_response(e: Exception):
-    return Response(data={'error': str(e)},
+    data = {
+        'error': str(e),
+        'error_cls': type(e).__name__,
+        'traceback': traceback.format_exc()
+    }
+    return Response(data=data,
                     status=HTTPStatus.INTERNAL_SERVER_ERROR)

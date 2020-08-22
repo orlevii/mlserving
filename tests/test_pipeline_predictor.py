@@ -49,4 +49,4 @@ class PipelinePredictorTest(unittest.TestCase):
                                                Request(payload={'age': 0}))
 
         self.assertEqual(result.get_status_code(), 500)
-        self.assertEqual(result.data, {'error': PredictorA.ERROR_MSG})
+        self.assertEqual(result.data['error'], PredictorA.ERROR_MSG)
