@@ -16,6 +16,11 @@ The idea is to have a python layer that makes some processing before invoking th
 
 <code>TFServingPrediction</code> implements <code>def predict</code> can be used as a mixin that handles the tf-serving request
 
+`requests` package is required for <code>TFServingPrediction</code> to work properly
+```bash
+$ pip install requests
+```
+
 ```python
 from mlserving.predictors import RESTPredictor
 from mlserving.predictors.tensorflow import TFServingPrediction
