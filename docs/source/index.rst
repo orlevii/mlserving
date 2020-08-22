@@ -2,12 +2,14 @@
 ML Serving - Serving ML Models
 =====================================
 
-:Version: 0.1.0
+:Stable Version: .. image:: https://badge.fury.io/py/mlserving.svg
 :Source Code: https://github.com/orlevii/mlserving
 
 **mlserving** is a framework for developing a realtime model-inference service.
 
-Allows you to set up an inference-endpoint for your ML Model easily.
+Allows you to easily set-up an inference-endpoint for your ML Model.
+
+**mlserving** emphasizes on high performance and allows easy integration with other model servers such as **TensorFlow Serving**
 
 Motivation
 ==================
@@ -19,22 +21,20 @@ Demo Repository
 ==================
 SKLearn model: https://github.com/orlevii/mlserving-example
 
-Content
-==================
-
 .. toctree::
     :maxdepth: 2
-    :caption: getting started
+    :caption: Getting Started
 
     install
     serving-models
     predictors
+    tf-serving
     health-check
     running-in-prod
 
 .. toctree::
     :maxdepth: 2
-    :caption: advanced
+    :caption: Advanced
 
     web-frameworks
 
