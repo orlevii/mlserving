@@ -25,7 +25,7 @@ class MyPredictor(RESTPredictor):
         return {'probability': prediction}
 
 app = ServingApp()
-app.add_inference_handler(MyPredictor(), '/api/v1/predict')
+app.add_inference_handler('/api/v1/predict', MyPredictor())
 app.run()
 ```
 This example assumes your endpoint receives post-processed features.

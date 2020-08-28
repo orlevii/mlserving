@@ -11,3 +11,4 @@ pep8-naming
 sphinx<2
 recommonmark
 sphinx_rtd_theme
+sphinx_copybutton
