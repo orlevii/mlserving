@@ -8,6 +8,6 @@ flake8-expression-complexity
 pep8-naming
 
 #docs
-sphinx<2
+sphinx<5
 recommonmark
 sphinx_rtd_theme
